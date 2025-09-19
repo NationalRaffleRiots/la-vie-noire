@@ -447,7 +447,176 @@
       document.getElementById('purchaseReg').addEventListener('click', ()=> openPurchase('Registration', REGISTRATION_AMOUNT));
     });
   </script>
-</body><script>
+ <script>
+const ADMINS = [{email:'you@domain.com', password:'YourSecret123'}];
+let isAdmin = false;
+
+// --- Admin login functions ---
+function openAdminLogin(){ document.getElementById('adminModal').classList.add('open'); }
+function closeAdminLogin(){ document.getElementById('adminModal').classList.remove('open'); }
+
+function loginAdmin(){
+  const email = document.getElementById('adminEmail').value.trim();
+  const pw = document.getElementById('adminPassword').value.trim();
+  const msg = document.getElementById('adminMsg');
+  if(!email || !pw){ msg.textContent='Enter email and password'; return; }
+
+  const valid = ADMINS.find(a=>a.email===email && a.password===pw);
+  if(valid){
+    isAdmin = true;
+    msg.style.color='var(--gold)';
+    msg.textContent='Admin logged in ✅';
+    closeAdminLogin();
+    enableAdminMode();
+  } else {
+    msg.style.color='tomato';
+    msg.textContent='Invalid credentials ❌';
+  }
+}
+
+// --- Enable admin mode ---
+function enableAdminMode(){
+  document.body.classList.add('admin-mode');
+
+  // Hero/logo editable
+  const heroLogo = document.querySelector(".hero-logo");
+  const neonCenter = document.querySelector(".neon-center img");
+  [heroLogo, neonCenter].forEach(el=>attachFileUpload(el));
+
+  // Make card thumbnails editable
+  document.querySelectorAll(".card-item .thumb").forEach(el=>attachFileUpload(el));
+
+  // Add edit/delete buttons for cards
+  document.querySelectorAll(".card-item").forEach(card=>{
+    addCardAdminButtons(card);
+  });
+
+  // Add "Add New Card" button at top of content
+  const contentSection = document.querySelector('.content');
+  if(!document.getElementById('addCardBtn')){
+    const btn = document.createElement('button');
+    btn.id='addCardBtn';
+    btn.textContent='Add New Card';
+    btn.className='btn';
+    btn.style.marginBottom='16px';
+    btn.onclick = ()=>openAddCardModal();
+    contentSection.prepend(btn);
+  }
+}
+
+// --- File upload for images/videos ---
+function attachFileUpload(el){
+  el.style.cursor="pointer";
+  el.style.outline="2px dashed var(--gold)";
+  el.onclick = ()=>{
+    const input = document.createElement("input");
+    input.type="file";
+    input.accept="image/*,video/*";
+    input.onchange = ()=>{
+      const file = input.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = e=>{
+        if(el.tagName.toLowerCase()==="video") el.src=e.target.result;
+        else el.src=e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  };
+}
+
+// --- Add Edit/Delete Buttons ---
+function addCardAdminButtons(card){
+  if(card.querySelector('.adminBtns')) return;
+  const btns = document.createElement('div');
+  btns.className='adminBtns';
+  btns.style.display='flex';
+  btns.style.gap='6px';
+  btns.style.marginTop='6px';
+
+  const editBtn = document.createElement('button');
+  editBtn.textContent='Edit';
+  editBtn.className='btn';
+  editBtn.onclick = ()=>openEditCardModal(card);
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.textContent='Delete';
+  deleteBtn.className='ghost';
+  deleteBtn.onclick = ()=>{
+    if(confirm('Delete this card?')) card.remove();
+  };
+
+  btns.append(editBtn, deleteBtn);
+  card.appendChild(btns);
+
+  // Make card thumbnail editable
+  const thumb = card.querySelector('.thumb');
+  if(thumb) attachFileUpload(thumb);
+}
+
+// --- Add/Edit Card Modal ---
+function openAddCardModal(){
+  openCardModal('Add New Card', null);
+}
+function openEditCardModal(card){
+  openCardModal('Edit Card', card);
+}
+
+function openCardModal(title, card){
+  if(document.getElementById('cardModal')) document.getElementById('cardModal').remove();
+  const modalHTML = `
+    <div class="modal" id="cardModal">
+      <div class="modal-body">
+        <strong>${title}</strong>
+        <div class="field"><label class="muted">Title</label><input id="cardTitle" value="${card ? card.querySelector('h3').textContent : ''}" /></div>
+        <div class="field"><label class="muted">Description</label><input id="cardDesc" value="${card ? card.querySelector('p.muted').textContent : ''}" /></div>
+        <div class="field"><label class="muted">Tag</label><input id="cardTag" value="${card ? card.querySelector('.tag').textContent : ''}" /></div>
+        <div class="field"><label class="muted">Price</label><input id="cardPrice" value="${card ? card.querySelector('.buy .btn')?.textContent.replace('Buy ','') : ''}" /></div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px">
+          <button class="ghost" onclick="document.getElementById('cardModal').remove()">Cancel</button>
+          <button class="btn" onclick="saveCard(${card ? 'true' : 'false'})">Save</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  document.getElementById('cardModal').classList.add('open');
+}
+
+function saveCard(isEdit){
+  const modal = document.getElementById('cardModal');
+  const title = document.getElementById('cardTitle').value;
+  const desc = document.getElementById('cardDesc').value;
+  const tag = document.getElementById('cardTag').value;
+  const price = document.getElementById('cardPrice').value;
+
+  if(isEdit){ // editing existing card
+    const card = document.querySelector('.card-item.editing');
+    if(card){
+      card.querySelector('h3').textContent = title;
+      card.querySelector('p.muted').textContent = desc;
+      if(card.querySelector('.tag')) card.querySelector('.tag').textContent = tag;
+      if(card.querySelector('.buy .btn')) card.querySelector('.buy .btn').textContent = price ? `Buy ${price}` : 'Buy';
+    }
+  } else { // adding new card
+    const newCard = document.createElement('article');
+    newCard.className='card-item';
+    newCard.innerHTML = `
+      <div class="tag">${tag}</div>
+      <div class="locked">Locked</div>
+      <div class="thumb">Thumbnail</div>
+      <h3>${title}</h3>
+      <p class="muted">${desc}</p>
+      <div class="buy"><button class="btn">${price ? `Buy ${price}` : 'Buy'}</button></div>
+    `;
+    document.querySelector('.content').prepend(newCard);
+    addCardAdminButtons(newCard);
+  }
+
+  modal.remove();
+}
+</script>
+ </body><script>
 function enableMediaUploads() {
   if (!isAdmin) return;
   
@@ -517,9 +686,8 @@ function loginAdmin() {
     msg.style.color = 'tomato';
     msg.textContent = 'Invalid credentials ❌';
   }
-}
-</script>
-
+}  
+<script>
 </html>
 
 
@@ -610,3 +778,28 @@ function makeCardsEditable() {
 // Activate admin mode via console: activateAdmin();
 console.log("To enable admin mode, call activateAdmin() in console");
 </script>
+<!-- Admin Login Modal -->
+<div class="modal" id="adminModal">
+  <div class="modal-body">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <strong>Admin Login</strong>
+      <button class="ghost" onclick="closeAdminLogin()">Close</button>
+    </div>
+    <div class="field">
+      <label class="muted">Email</label>
+      <input id="adminEmail" placeholder="admin@example.com" />
+    </div>
+    <div class="field">
+      <label class="muted">Password</label>
+      <input id="adminPassword" type="password" placeholder="••••••" />
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="ghost" onclick="closeAdminLogin()">Cancel</button>
+      <button class="btn" onclick="loginAdmin()">Login</button>
+    </div>
+    <div id="adminMsg" style="margin-top:8px;color:var(--muted)"></div>
+  </div>
+</div>
+
+<button class="btn" onclick="openAdminLogin()">Admin Login</button>
+
