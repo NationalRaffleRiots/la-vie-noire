@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>La Vie Noire — Members Only</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --panel:#111111;
+      --accent-red: #d10b0b;
+      --gold: #FFD700;
+      --white:#ffffff;
+      --btn-green: #013220;
+      --muted:#bdbdbd;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#050505);font-family:Montserrat,system-ui,Arial,sans-serif;color:var(--white)}
+    a{color:var(--white);text-decoration:none}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:transparent}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo-wrap{width:84px;height:84px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent}
+    .logo-wrap img{width:100%;height:100%;object-fit:cover;filter:drop-shadow(0 6px 18px rgba(0,0,0,.6))}
+    .brand h1{font-family:'Playfair Display',serif;margin:0;font-weight:900;letter-spacing:.02em;color:var(--accent-red);font-size:22px}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+    nav{display:flex;gap:12px;align-items:center}
+    .nav-link{padding:8px 12px;border-radius:8px;font-weight:600}
+    .btn{background:var(--btn-green);color:var(--white);border:none;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:700}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,.08);padding:8px 12px;border-radius:8px}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;padding:48px 4%;min-height:66vh}
+    .hero-left{max-width:900px}
+    .eyebrow{color:var(--gold);font-weight:700;letter-spacing:1px}
+    h2{font-family:'Playfair Display',serif;font-size:68px;line-height:.9;margin:8px 0 14px;color:var(--accent-red);text-shadow:0 8px 40px rgba(209,11,11,.12)}
+    p.lead{color:var(--muted);max-width:64ch;font-size:16px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:16px;padding:20px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6);position:relative}
+    .neon-ring{width:320px;height:320px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .neon-ring::before{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:0 0 40px 10px rgba(0,200,255,.06),0 0 90px 20px rgba(0,200,255,.08),inset 0 0 18px rgba(0,200,255,.06);}
+    .neon-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+    .neon-center img{max-width:220px;max-height:220px;opacity:0.98;filter:drop-shadow(0 20px 50px rgba(0,0,0,.8))}
+    .members-only{margin-top:12px;font-family:'Playfair Display',serif;color:var(--gold);font-size:18px}
+    .features{display:flex;gap:12px;margin-top:18px}
+    .feat{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;flex:1;text-align:left}
+    .feat h4{margin:0 0 6px;font-size:14px;color:var(--gold)}
+    .feat p{margin:0;color:var(--muted);font-size:13px}
+    .content{padding:28px 4%;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .card-item{background:var(--panel);border-radius:12px;padding:12px;position:relative;overflow:hidden}
+    .thumb{height:160px;border-radius:8px;background:#000;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+    .tag{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;font-weight:700;color:var(--gold)}
+    .locked{position:absolute;right:12px;top:12px;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;color:var(--accent-red);font-weight:700}
+    .card-item h3{margin:10px 0 6px;font-size:16px}
+    .card-item p{margin:0;color:var(--muted);font-size:13px}
+    .buy{display:flex;gap:8px;margin-top:10px}
+    footer{padding:24px 4%;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,.03);margin-top:28px}
+    @media(max-width:880px){
+      .hero{grid-template-columns:1fr;min-height:60vh}
+      .neon-ring{width:260px;height:260px}
+      h2{font-size:42px}
+    }
+    .muted{color:var(--muted)}
+    .gold{color:var(--gold)}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:99}
+    .modal.open{display:flex}
+    .modal-body{background:#0d0d0d;padding:20px;border-radius:12px;width:420px;max-width:92%}
+    .field{margin-bottom:10px}
+    input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:transparent;color:var(--white)}
+    .hero-logo { max-width: 300px; margin: 10px auto 6px; display:block; border-radius:8px; }
+    button[disabled] { opacity: 0.6; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo-wrap">
+        <!-- Use the image in the same folder as this index.html -->
+        <img src="LA2.png" alt="La Vie Noire logo">
+      </div>
+      <div>
+        <h1>La Vie Noire</h1>
+        <p>Members Only • Est. 2025</p>
+      </div>
+    </div>
+    <nav>
+      <a class="nav-link" href="#features">About</a>
+      <a class="nav-link" href="#creators">Creators</a>
+      <a class="nav-link" href="#pricing">Pricing</a>
+      <button class="btn" id="joinBtn">Register</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-left">
+        <div class="eyebrow">Exclusive Access</div>
+        <h2>La Vie <span style="color:var(--gold);">Noire</span><br>
+          <small style="font-size:18px;color:var(--muted);display:block;margin-top:6px;font-family:Montserrat">A private marketplace for premium creators — one-time registration to join.</small>
+        </h2>
+
+        <!-- show the main logo image again -->
+        <img src="LA2.png" alt="La Vie Noire logo" class="hero-logo">
+
+        <p class="lead">No monthly subscriptions. Pay one registration fee to enter and then purchase content or custom requests directly from creators. Built for privacy, exclusivity and creators-first revenue share.</p>
+
+        <div style="margin-top:18px;display:flex;gap:12px">
+          <button class="btn" id="purchaseReg">Pay registration</button>
+          <a class="ghost nav-link" href="#pricing">See pricing</a>
+        </div>
+
+        <div class="features" id="features">
+          <div class="feat">
+            <h4>Creators-first</h4>
+            <p>High payout splits, direct messaging and premium request handling.</p>
+          </div>
+          <div class="feat">
+            <h4>Pay-per-content</h4>
+            <p>Buy only what you want — no recurring fees.</p>
+          </div>
+          <div class="feat">
+            <h4>Privacy</h4>
+            <p>Members-only access, secure content sharing via private links.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card">
+        <div class="neon-ring" aria-hidden="true">
+          <div class="neon-center">
+            <img src="LA2.png" alt="La Vie Noire logo centered">
+          </div>
+        </div>
+        <div class="members-only">Members Only!</div>
+        <div style="margin-top:12px;color:var(--muted);font-size:13px">Join now to unlock creators and exclusive content drops.</div>
+      </aside>
+    </section>
+
+    <section class="content" id="creators">
+      <!-- example content cards -->
+      <article class="card-item">
+        <div class="tag">Premium</div>
+        <div class="locked">Locked</div>
+        <div class="thumb">Video thumbnail</div>
+        <h3>Midnight Set — 3 clips</h3>
+        <p class="muted">Short preview available. Full access after purchase.</p>
+        <div class="buy">
+          <button class="btn" data-role="buy-button" onclick="openPurchase('Midnight Set',29)">Buy R29</button>
+          <button class="ghost" onclick="preview('Midnight Set')">Preview</button>
+        </div>
+      </article>
+
+      <article class="card-item">
+        <div class="tag">Custom</div>
+        <div class="locked">Locked</div>
+        <div class="thumb">Photo set</div>
+        <h3>Personal Request</h3>
+        <p class="muted">Create a custom request directly with the creator.</p>
+        <div class="buy">
+          <button class="btn" data-role="request-button" onclick="openRequest('Custom Request')">Request</button>
+        </div>
+      </article>
+
+      <article class="card-item">
+        <div class="tag">Bundle</div>
+        <div class="locked">Locked</div>
+        <div class="thumb">Bundle preview</div>
+        <h3>VIP Bundle</h3>
+        <p class="muted">A curated selection for VIPs.</p>
+        <div class="buy">
+          <button class="btn" data-role="buy-button" onclick="openPurchase('VIP Bundle',99)">Buy R99</button>
+        </div>
+      </article>
+
+    </section>
+
+    <section style="padding:18px 4%;" id="pricing">
+      <h3 style="font-family:'Playfair Display',serif;color:var(--gold)">Pricing</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+        <div style="background:var(--panel);padding:12px;border-radius:10px;min-width:220px;flex:1">
+          <h4 style="margin:0 0 6px;color:var(--accent-red)">Registration</h4>
+          <p class="muted">One-time registration fee: <strong>R280</strong></p>
+          <p class="muted">Then buy content individually.</p>
+          <div style="margin-top:10px"><button class="btn" onclick="simulatePay('reg')">Pay registration (demo)</button></div>
+        </div>
+
+        <div style="background:var(--panel);padding:12px;border-radius:10px;min-width:220px;flex:1">
+          <h4 style="margin:0 0 6px;color:var(--accent-red)">Buy content</h4>
+          <p class="muted">Single content prices: R10–R199 depending on creator.</p>
+          <div style="margin-top:10px"><button class="btn" onclick="openPurchase('Sample Content',25)">Buy sample R25</button></div>
+        </div>
+
+        <div style="background:var(--panel);padding:12px;border-radius:10px;min-width:220px;flex:1">
+          <h4 style="margin:0 0 6px;color:var(--accent-red)">Custom Request</h4>
+          <p class="muted">Creators set their own rates for custom content.</p>
+          <div style="margin-top:10px"><button class="btn" onclick="openRequest('Custom Request Demo')">Request</button></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div style="max-width:900px;margin:0 auto">&copy; 2025 La Vie Noire • Built for creators & members. <span class="muted">Privacy & Terms apply</span></div>
+  </footer>
+
+  <!-- purchase modal -->
+  <div class="modal" id="modal">
+    <div class="modal-body">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <strong id="modalTitle">Purchase</strong>
+        <button onclick="closeModal()" class="ghost">Close</button>
+      </div>
+      <div class="field">
+        <label class="muted">Item</label>
+        <input id="itemName" readonly />
+      </div>
+      <div class="field">
+        <label class="muted">Amount (ZAR)</label>
+        <input id="amount" readonly />
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn" onclick="startPayment()">Pay with PayFast</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- request modal -->
+  <div class="modal" id="reqModal">
+    <div class="modal-body">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <strong>Custom request</strong>
+        <button onclick="closeReq()" class="ghost">Close</button>
+      </div>
+      <div class="field">
+        <label class="muted">Describe your request</label>
+        <textarea id="reqText" rows="4"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="ghost" onclick="closeReq()">Cancel</button>
+        <button class="btn" onclick="submitRequest()">Send request</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- verify modal will be inserted dynamically by script -->
+  <script>
+    /*****************************************************************
+     * CONFIG - REPLACE THESE
+     *****************************************************************/
+    const VERIFY_URL = 'YOUR_APPSCRIPT_WEBAPP_URL_HERE'; // <-- REPLACE with your Apps Script Web App POST URL
+    const PAYFAST_CHECKOUT_URL = 'https://www.payfast.co.za/eng/process'; // <-- replace with your checkout or merchant link
+    const REGISTRATION_AMOUNT = 280; // ZAR
+    /*****************************************************************/
+
+    // small helpers and modal refs
+    const modal = document.getElementById('modal');
+    const reqModal = document.getElementById('reqModal');
+    const itemName = document.getElementById('itemName');
+    const amount = document.getElementById('amount');
+
+    // verification state persisted to localStorage (expires)
+    const STORAGE_KEY = 'lvn_verified';
+    let isVerified = false;
+    let verifiedEmail = '';
+    let verifiedTx = '';
+
+    function saveVerification(email, tx) {
+      const record = { email: email, tx: tx, expires: Date.now() + (30*24*60*60*1000) }; // 30 days
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+    }
+    function loadVerification() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return false;
+      try {
+        const r = JSON.parse(raw);
+        if (r.expires && Date.now() < r.expires) {
+          verifiedEmail = r.email;
+          verifiedTx = r.tx;
+          isVerified = true;
+          return true;
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+          return false;
+        }
+      } catch (e) { localStorage.removeItem(STORAGE_KEY); return false; }
+    }
+    function clearVerification() {
+      localStorage.removeItem(STORAGE_KEY);
+      isVerified = false;
+      verifiedEmail = '';
+      verifiedTx = '';
+    }
+
+    /* --- Verification modal (dynamic) --- */
+    function ensureVerifyModal() {
+      if (document.getElementById('verifyModal')) return;
+      const html = `
+        <div class="modal" id="verifyModal">
+          <div class="modal-body">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <strong>Member verification</strong>
+              <button class="ghost" onclick="closeVerify()">Close</button>
+            </div>
+            <div class="field">
+              <label class="muted">Email used to register</label>
+              <input id="verifyEmail" placeholder="you@example.com" />
+            </div>
+            <div class="field">
+              <label class="muted">Transaction ID / Payment reference</label>
+              <input id="verifyTx" placeholder="PAY123456" />
+            </div>
+            <div style="display:flex;gap:8px;justify-content:flex-end">
+              <button class="ghost" onclick="closeVerify()">Cancel</button>
+              <button class="btn" onclick="attemptVerify()">Verify</button>
+            </div>
+            <div id="verifyMsg" style="margin-top:8px;color:var(--muted)"></div>
+          </div>
+        </div>`;
+      document.body.insertAdjacentHTML('beforeend', html);
+    }
+    function openVerify() { ensureVerifyModal(); document.getElementById('verifyModal').classList.add('open'); }
+    function closeVerify() { const m = document.getElementById('verifyModal'); if (m) m.classList.remove('open'); }
+
+    // gate UI: enable/disable buy/request buttons based on isVerified
+    function setGatedState() {
+      const buyBtns = document.querySelectorAll('[data-role="buy-button"]');
+      const reqBtns = document.querySelectorAll('[data-role="request-button"]');
+
+      buyBtns.forEach(b=>{
+        b.disabled = !isVerified;
+        if(!isVerified) { b.classList.add('ghost'); b.title='Members only — register then verify to purchase'; }
+        else { b.classList.remove('ghost'); b.title=''; }
+      });
+
+      reqBtns.forEach(b=>{
+        b.disabled = !isVerified;
+        if(!isVerified) { b.classList.add('ghost'); b.title='Members only — register then verify to request'; }
+        else { b.classList.remove('ghost'); b.title=''; }
+      });
+
+      const joinBtn = document.getElementById('joinBtn');
+      if (joinBtn) {
+        if (!isVerified) {
+          joinBtn.textContent = 'Register';
+          joinBtn.onclick = ()=>openVerify();
+        } else {
+          joinBtn.textContent = 'Verified ✓';
+          joinBtn.onclick = ()=>alert('Verified as ' + (verifiedEmail || 'member'));
+        }
+      }
+    }
+
+    // call Apps Script Web App to verify email + tx - expects JSON {email, tx}
+    async function attemptVerify() {
+      const email = (document.getElementById('verifyEmail').value || '').trim();
+      const tx = (document.getElementById('verifyTx').value || '').trim();
+      const msgEl = document.getElementById('verifyMsg');
+      msgEl.style.color = 'var(--muted)';
+      msgEl.textContent = 'Verifying...';
+
+      if (!email || !tx) { msgEl.textContent = 'Enter email and transaction ID'; return; }
+
+      try {
+        const res = await fetch(VERIFY_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, tx: tx })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          isVerified = true;
+          verifiedEmail = email;
+          verifiedTx = tx;
+          saveVerification(email, tx);
+          msgEl.style.color = 'var(--gold)';
+          msgEl.textContent = 'Verified — welcome!';
+          setTimeout(()=>{ closeVerify(); setGatedState(); }, 700);
+        } else {
+          msgEl.style.color = 'tomato';
+          msgEl.textContent = data.error || 'Verification failed';
+        }
+      } catch (err) {
+        msgEl.style.color = 'tomato';
+        msgEl.textContent = 'Network error: ' + err.toString();
+      }
+    }
+
+    /* --- Purchase & Request flow (gated) --- */
+    function openPurchase(title, amt){
+      if(!isVerified){ openVerify(); return; } // require verification
+      itemName.value = title;
+      amount.value = amt;
+      modal.classList.add('open');
+    }
+    function closeModal(){ modal.classList.remove('open') }
+
+    function openRequest(tag){
+      if(!isVerified){ openVerify(); return; }
+      reqModal.classList.add('open');
+    }
+    function closeReq(){ reqModal.classList.remove('open') }
+
+    function startPayment() {
+      // Example: redirect to PayFast with item_name and amount if you use GET-style params.
+      // Adjust parameters according to PayFast (merchant_id, etc.). This is a placeholder.
+      const it = encodeURIComponent(itemName.value || 'item');
+      const am = encodeURIComponent(amount.value || '0');
+
+      // If purchasing registration, you might want to send buyer to PayFast with return URL pointing to Google Form
+      // For demo we show an alert.
+      if (itemName.value && parseFloat(amount.value) === REGISTRATION_AMOUNT) {
+        alert('Demo: redirecting to registration payment (R' + amount.value + '). Configure your payment provider to return to the Google Form where the user will paste the transaction ID.');
+      } else {
+        alert('Demo: redirecting to payment for ' + itemName.value + ' (R' + amount.value + ')');
+      }
+
+      // Example redirect (uncomment and modify to use):
+      // window.location.href = PAYFAST_CHECKOUT_URL + '?amount=' + am + '&item_name=' + it;
+    }
+
+    function submitRequest() {
+      const t = document.getElementById('reqText').value.trim();
+      if(!t){ alert('Please describe your request'); return; }
+      // MVP: open mail client to send request to admin/creator
+      const mailto = 'mailto:your-email@example.com?subject=' + encodeURIComponent('New custom request from ' + (verifiedEmail || 'member')) + '&body=' + encodeURIComponent(t + '\\n\\nMember: ' + (verifiedEmail || '') + '\\nTX: ' + (verifiedTx || ''));
+      window.location.href = mailto;
+    }
+
+    function preview(name){ alert('Preview: ' + name + '\\n\\nPreviewing is demo-only. In production show a short clip or blurred image.') }
+    function simulatePay(mode){
+      if(mode==='reg'){
+        // open payment flow for registration (demo)
+        openPurchase('Registration', REGISTRATION_AMOUNT);
+      }
+    }
+
+    // wire up header buttons and initial state
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // load persisted verification if present and valid
+      loadVerification();
+      setGatedState();
+
+      document.getElementById('joinBtn').addEventListener('click', ()=> {
+        if (!isVerified) openVerify();
+        else alert('You are verified as ' + verifiedEmail);
+      });
+      document.getElementById('purchaseReg').addEventListener('click', ()=> openPurchase('Registration', REGISTRATION_AMOUNT));
+    });
+  </script>
+</body><script>
+function enableMediaUploads() {
+  if (!isAdmin) return;
+  
+  // Make hero/logo editable
+  const heroLogo = document.querySelector(".hero-logo");
+  const neonCenter = document.querySelector(".neon-center img");
+  [heroLogo, neonCenter].forEach(el => attachFileUpload(el));
+  
+  // Make all card thumbnails editable
+  const thumbs = document.querySelectorAll(".card-item .thumb");
+  thumbs.forEach(el => attachFileUpload(el));
+  
+  // Optionally, make any video preview areas editable (if you have <video> elements)
+  const vids = document.querySelectorAll(".card-item video");
+  vids.forEach(el => attachFileUpload(el));
+}
+
+function attachFileUpload(el) {
+  el.style.cursor = "pointer";
+  el.style.outline = "2px dashed var(--neon-cyan)";
+  
+  el.onclick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*,video/*";
+    input.onchange = () => {
+      const file = input.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (el.tagName.toLowerCase() === "video") {
+          el.src = e.target.result;
+        } else {
+          el.src = e.target.result;
+        }
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  };
+}
+
+// Call this whenever admin logs in
+function afterAdminLogin() {
+  showAdminButtons();
+  makeCardsEditable();
+  enableMediaUploads();
+}
+
+// Modify loginAdmin() to call afterAdminLogin instead of makeCardsEditable()
+function loginAdmin() {
+  const email = document.getElementById('adminEmail').value.trim();
+  const pw = document.getElementById('adminPassword').value.trim();
+  const msg = document.getElementById('adminMsg');
+
+  if (!email || !pw) { msg.textContent = 'Enter email and password'; return; }
+
+  const valid = ADMINS.find(a => a.email === email && a.password === pw);
+  if (valid) {
+    isAdmin = true;
+    msg.style.color = 'var(--gold)';
+    msg.textContent = 'Admin logged in ✅';
+    closeAdminLogin();
+    afterAdminLogin(); // <-- updated
+  } else {
+    msg.style.color = 'tomato';
+    msg.textContent = 'Invalid credentials ❌';
+  }
+}
+</script>
+
+</html>
+
+
+<script>
+/***************** INLINE EDITOR & ADMIN MODE *****************/
+const ADMIN_PASSWORD = "YourSecret123"; // set your password
+let isAdmin = false;
+
+function activateAdmin() {
+  const pw = prompt("Enter admin password:");
+  if (pw === ADMIN_PASSWORD) {
+    isAdmin = true;
+    alert("Admin mode enabled ✅");
+    document.body.classList.add("admin-mode");
+    showAdminButtons();
+    makeCardsEditable();
+  } else {
+    alert("Wrong password ❌");
+  }
+}
+
+function showAdminButtons() {
+  if (!isAdmin) return;
+  const contentSection = document.getElementById("creators");
+
+  const addBtn = document.createElement("button");
+  addBtn.textContent = "➕ Add New Content";
+  addBtn.classList.add("btn");
+  addBtn.style.marginBottom = "12px";
+  addBtn.onclick = () => addContentCard();
+  contentSection.prepend(addBtn);
+
+  const heroBtn = document.createElement("button");
+  heroBtn.textContent = "🖼 Update Hero/Logo";
+  heroBtn.classList.add("btn");
+  heroBtn.style.marginBottom = "12px";
+  heroBtn.onclick = () => updateHeroImage();
+  contentSection.prepend(heroBtn);
+}
+
+function addContentCard() {
+  if (!isAdmin) return;
+  const title = prompt("Content title:");
+  const price = prompt("Price (ZAR):");
+  const type = prompt("Type (Premium / Custom / Bundle):");
+  const thumb = prompt("Thumbnail text / image URL:");
+  if (!title || !price || !type) return;
+
+  const card = document.createElement("article");
+  card.classList.add("card-item");
+  card.innerHTML = `
+    <div class="tag" contenteditable>${type}</div>
+    <div class="locked">Locked</div>
+    <div class="thumb" contenteditable>${thumb}</div>
+    <h3 contenteditable>${title}</h3>
+    <p class="muted" contenteditable>Short preview available. Full access after purchase.</p>
+    <div class="buy">
+      <button class="btn" data-role="buy-button" onclick="openPurchase('${title}',${price})">Buy R${price}</button>
+    </div>
+  `;
+  document.getElementById("creators").appendChild(card);
+  makeCardsEditable();
+  setGatedState();
+}
+
+function updateHeroImage() {
+  if (!isAdmin) return;
+  const url = prompt("Enter image URL for hero/logo:");
+  if (!url) return;
+  const heroLogo = document.querySelector(".hero-logo");
+  const neonCenter = document.querySelector(".neon-center img");
+  heroLogo.src = url;
+  neonCenter.src = url;
+  alert("Hero/logo updated ✅");
+}
+
+function makeCardsEditable() {
+  if (!isAdmin) return;
+  const editableElements = document.querySelectorAll("#creators .card-item [contenteditable]");
+  editableElements.forEach(el => {
+    el.style.outline = "2px dashed var(--neon-cyan)";
+    el.addEventListener("blur", () => {
+      console.log("Updated:", el.textContent); // in production, save via API/Apps Script
+    });
+  });
+}
+
+// Activate admin mode via console: activateAdmin();
+console.log("To enable admin mode, call activateAdmin() in console");
+</script>
