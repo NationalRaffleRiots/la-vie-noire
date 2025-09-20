@@ -3,377 +3,309 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>La Vie Noire — Members Only</title>
-<link rel="preconnect" href="https://fonts.gstatic.com">
+<title>La Vie Noire — Admin CMS</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b0b0b;
-  --panel:#111111;
-  --accent-red:#ff1a1a;
-  --gold:#FFD700;
-  --white:#ffffff;
-  --btn-green:#013220;
-  --muted:#bdbdbd;
-  --neon-cyan:#00ffff;
+  --bg:#0b0b0b; --panel:#111111; --accent-red:#ff1a1a; --gold:#FFD700;
+  --white:#fff; --muted:#bdbdbd; --neon:#00ffff; --btn-green:#013220;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#050505);font-family:Montserrat,system-ui,Arial,sans-serif;color:var(--white)}
-a{color:var(--white);text-decoration:none}
-header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:transparent}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px}
 .brand{display:flex;align-items:center;gap:14px}
-.logo-wrap{width:84px;height:84px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;cursor:pointer;}
-.logo-wrap img{width:100%;height:100%;object-fit:cover;filter:drop-shadow(0 6px 18px rgba(0,0,0,.6))}
-.brand h1{font-family:'Playfair Display',serif;margin:0;font-weight:900;letter-spacing:.02em;color:var(--accent-red);font-size:22px}
-.brand p{margin:0;font-size:12px;color:var(--muted)}
-nav{display:flex;gap:12px;align-items:center}
-.nav-link{padding:8px 12px;border-radius:8px;font-weight:600}
+.logo-wrap{width:84px;height:84px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.logo-wrap img{width:100%;height:100%;object-fit:cover}
+.nav{display:flex;gap:12px;align-items:center}
 .btn{background:var(--btn-green);color:var(--white);border:none;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:700}
 .ghost{background:transparent;border:1px solid rgba(255,255,255,.08);padding:8px 12px;border-radius:8px}
-.hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;padding:48px 4%;min-height:66vh}
-.hero-left{max-width:900px}
-.eyebrow{color:var(--gold);font-weight:700;letter-spacing:1px}
-h2{font-family:'Playfair Display',serif;font-size:68px;line-height:.9;margin:8px 0 14px;color:var(--accent-red);text-shadow:0 8px 40px rgba(255,26,26,.12)}
-p.lead{color:var(--muted);max-width:64ch;font-size:16px}
-.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:16px;padding:20px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6);position:relative}
-.neon-ring{width:320px;height:320px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.neon-ring::before{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:0 0 40px 10px rgba(0,255,255,.06),0 0 90px 20px rgba(0,255,255,.08),inset 0 0 18px rgba(0,255,255,.06);}
-.neon-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.neon-center img{max-width:220px;max-height:220px;opacity:0.98;filter:drop-shadow(0 20px 50px rgba(0,0,0,.8));cursor:pointer;}
-.members-only{margin-top:12px;font-family:'Playfair Display',serif;color:var(--gold);font-size:18px}
-.features{display:flex;gap:12px;margin-top:18px}
-.feat{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;flex:1;text-align:left}
-.feat h4{margin:0 0 6px;font-size:14px;color:var(--gold)}
-.feat p{margin:0;color:var(--muted);font-size:13px}
-.content{padding:28px 4%;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;padding:32px 4%;min-height:40vh}
+h2{font-family:'Playfair Display',serif;color:var(--accent-red)}
+.lead{color:var(--muted)}
+.card{background:var(--panel);border-radius:12px;padding:12px;box-shadow:0 12px 30px rgba(0,0,0,.6)}
+.content{padding:18px 4%;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
 .card-item{background:var(--panel);border-radius:12px;padding:12px;position:relative;overflow:hidden}
-.thumb{height:160px;border-radius:8px;background:#000;display:flex;align-items:center;justify-content:center;color:var(--muted);position:relative}
-.tag{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;font-weight:700;color:var(--gold)}
+.thumb{height:160px;border-radius:8px;background:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.tag{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;color:var(--gold);font-weight:700}
 .locked{position:absolute;right:12px;top:12px;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;color:var(--accent-red);font-weight:700}
-.card-item h3{margin:10px 0 6px;font-size:16px}
-.card-item p{margin:0;color:var(--muted);font-size:13px}
-.buy{display:flex;gap:8px;margin-top:10px}
-footer{padding:24px 4%;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,.03);margin-top:28px}
-.admin-btn{position:absolute;bottom:6px;right:6px;background:var(--gold);color:#000;border:none;padding:4px 6px;margin-left:4px;border-radius:4px;cursor:pointer;font-size:12px}
-.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:99}
+.admin-bar{position:fixed;right:12px;bottom:12px;display:flex;gap:8px;z-index:999}
+.admin-small{background:var(--neon);color:#000;padding:8px 10px;border-radius:8px;border:none;cursor:pointer}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:999}
 .modal.open{display:flex}
-.modal-body{background:#0d0d0d;padding:20px;border-radius:12px;width:420px;max-width:92%}
+.modal-body{background:#0d0d0d;padding:20px;border-radius:12px;width:480px;max-width:96%}
 .field{margin-bottom:10px}
-input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:transparent;color:var(--white)}
-button[disabled]{opacity:.6;cursor:not-allowed}
-@media(max-width:880px){
-  .hero{grid-template-columns:1fr;min-height:60vh}
-  .neon-ring{width:260px;height:260px}
-  h2{font-size:42px}
-}
+input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:transparent;color:var(--white)}
+.admin-btn{background:var(--gold);color:#000;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-weight:700;margin-left:6px}
+@media(max-width:880px){ .hero{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand logo-wrap" id="heroLogoUpload">
-    <img id="heroLogo" src="LA2.png" alt="La Vie Noire logo">
+  <div class="brand">
+    <div class="logo-wrap" id="logoWrap"><img id="heroLogo" src="LA2.png" alt="logo"></div>
+    <div><h2 style="margin:0">La Vie Noire</h2><div style="color:var(--muted)">Members Only</div></div>
   </div>
-  <div>
-    <h1>La Vie Noire</h1>
-    <p>Members Only • Est. 2025</p>
+  <div class="nav">
+    <button class="btn" id="adminLoginBtn">Admin Login</button>
   </div>
-  <nav>
-    <a class="nav-link" href="#features">About</a>
-    <a class="nav-link" href="#creators">Creators</a>
-    <a class="nav-link" href="#pricing">Pricing</a>
-    <button class="btn" id="joinBtn">Admin Login</button>
-  </nav>
 </header>
 
-<main>
 <section class="hero">
-  <div class="hero-left">
-    <div class="eyebrow">Exclusive Access</div>
-    <h2>La Vie <span style="color:var(--gold);">Noire</span><br>
-      <small style="font-size:18px;color:var(--muted);display:block;margin-top:6px;font-family:Montserrat">
-      A private marketplace for premium creators — one-time registration to join.
-      </small>
-    </h2>
-
-    <img src="LA2.png" id="centerLogo" alt="La Vie Noire logo" class="hero-logo">
-
-    <p class="lead">No monthly subscriptions. Pay one registration fee to enter and then purchase content or custom requests directly from creators.</p>
+  <div>
+    <h2>La Vie <span style="color:var(--gold)">Noire</span></h2>
+    <p class="lead">Admin panel — manage cards, media and hero logo.</p>
+    <div style="margin-top:12px"><button class="btn" id="addCardHeaderBtn" style="display:none">Add New Card</button></div>
   </div>
-
   <aside class="card">
-    <div class="neon-ring" aria-hidden="true">
-      <div class="neon-center"><img id="centerLogoThumb" src="LA2.png"></div>
-    </div>
-    <div class="members-only">Members Only!</div>
-    <div style="margin-top:12px;color:var(--muted);font-size:13px">Join now to unlock creators and exclusive content drops.</div>
+    <div style="text-align:center"><img id="centerLogo" src="LA2.png" alt="center logo" style="max-width:240px;cursor:pointer"></div>
+    <div style="margin-top:12px;color:var(--muted)">Click logo to update (admin only)</div>
   </aside>
 </section>
 
 <section class="content" id="creators"></section>
 
-<section style="padding:18px 4%;" id="pricing">
-  <h3 style="font-family:'Playfair Display',serif;color:var(--gold)">Pricing</h3>
-  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
-    <div style="background:var(--panel);padding:12px;border-radius:10px;min-width:220px;flex:1">
-      <h4 style="margin:0 0 6px;color:var(--accent-red)">Registration</h4>
-      <p class="muted">One-time registration fee: <strong>R280</strong></p>
-    </div>
-  </div>
-</section>
-</main>
+<footer style="padding:24px 4%;color:var(--muted);text-align:center">© 2025 La Vie Noire</footer>
 
-<footer>
-<div style="max-width:900px;margin:0 auto">&copy; 2025 La Vie Noire • Built for creators & members. <span class="muted">Privacy & Terms apply</span></div>
-</footer>
+<!-- Hidden file input -->
+<input type="file" id="fileInput" style="display:none" />
 
-<!-- hidden file input -->
-<input type="file" id="fileUploadInput" style="display:none"/>
-
-<!-- admin login modal -->
-<div class="modal" id="adminLoginModal">
+<!-- Admin Login Modal -->
+<div class="modal" id="adminModal">
   <div class="modal-body">
     <h3>Admin Login</h3>
     <div class="field"><input id="adminEmail" placeholder="Email"></div>
     <div class="field"><input id="adminPass" type="password" placeholder="Password"></div>
-    <div id="adminLoginMsg" class="muted"></div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
-      <button class="ghost" onclick="closeAdminLogin()">Cancel</button>
-      <button class="btn" onclick="adminLogin()">Login</button>
+      <button class="ghost" onclick="closeAdminModal()">Cancel</button>
+      <button class="btn" onclick="doAdminLogin()">Login</button>
     </div>
+    <div id="adminMsg" style="color:var(--muted);margin-top:8px"></div>
   </div>
 </div>
 
- <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>La Vie Noire — Members Only</title>
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#0b0b0b;
-  --panel:#111111;
-  --accent-red:#ff1a1a;
-  --gold:#FFD700;
-  --white:#ffffff;
-  --btn-green:#013220;
-  --muted:#bdbdbd;
-  --neon-cyan:#00ffff;
-}
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#050505);font-family:Montserrat,system-ui,Arial,sans-serif;color:var(--white)}
-a{color:var(--white);text-decoration:none}
-header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:transparent}
-.brand{display:flex;align-items:center;gap:14px}
-.logo-wrap{width:84px;height:84px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:transparent;cursor:pointer;}
-.logo-wrap img{width:100%;height:100%;object-fit:cover;filter:drop-shadow(0 6px 18px rgba(0,0,0,.6))}
-.brand h1{font-family:'Playfair Display',serif;margin:0;font-weight:900;letter-spacing:.02em;color:var(--accent-red);font-size:22px}
-.brand p{margin:0;font-size:12px;color:var(--muted)}
-nav{display:flex;gap:12px;align-items:center}
-.nav-link{padding:8px 12px;border-radius:8px;font-weight:600}
-.btn{background:var(--btn-green);color:var(--white);border:none;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:700}
-.ghost{background:transparent;border:1px solid rgba(255,255,255,.08);padding:8px 12px;border-radius:8px}
-.hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;padding:48px 4%;min-height:66vh}
-.hero-left{max-width:900px}
-.eyebrow{color:var(--gold);font-weight:700;letter-spacing:1px}
-h2{font-family:'Playfair Display',serif;font-size:68px;line-height:.9;margin:8px 0 14px;color:var(--accent-red);text-shadow:0 8px 40px rgba(255,26,26,.12)}
-p.lead{color:var(--muted);max-width:64ch;font-size:16px}
-.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:16px;padding:20px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6);position:relative}
-.neon-ring{width:320px;height:320px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.neon-ring::before{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:0 0 40px 10px rgba(0,255,255,.06),0 0 90px 20px rgba(0,255,255,.08),inset 0 0 18px rgba(0,255,255,.06);}
-.neon-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.neon-center img{max-width:220px;max-height:220px;opacity:0.98;filter:drop-shadow(0 20px 50px rgba(0,0,0,.8));cursor:pointer;}
-.members-only{margin-top:12px;font-family:'Playfair Display',serif;color:var(--gold);font-size:18px}
-.features{display:flex;gap:12px;margin-top:18px}
-.feat{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;flex:1;text-align:left}
-.feat h4{margin:0 0 6px;font-size:14px;color:var(--gold)}
-.feat p{margin:0;color:var(--muted);font-size:13px}
-.content{padding:28px 4%;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.card-item{background:var(--panel);border-radius:12px;padding:12px;position:relative;overflow:hidden}
-.thumb{height:160px;border-radius:8px;background:#000;display:flex;align-items:center;justify-content:center;color:var(--muted);position:relative}
-.tag{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;font-weight:700;color:var(--gold)}
-.locked{position:absolute;right:12px;top:12px;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;color:var(--accent-red);font-weight:700}
-.card-item h3{margin:10px 0 6px;font-size:16px}
-.card-item p{margin:0;color:var(--muted);font-size:13px}
-.buy{display:flex;gap:8px;margin-top:10px}
-footer{padding:24px 4%;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,.03);margin-top:28px}
-.admin-btn{position:absolute;bottom:6px;right:6px;background:var(--gold);color:#000;border:none;padding:4px 6px;margin-left:4px;border-radius:4px;cursor:pointer;font-size:12px}
-.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:99}
-.modal.open{display:flex}
-.modal-body{background:#0d0d0d;padding:20px;border-radius:12px;width:420px;max-width:92%}
-.field{margin-bottom:10px}
-input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:transparent;color:var(--white)}
-button[disabled]{opacity:.6;cursor:not-allowed}
-@media(max-width:880px){
-  .hero{grid-template-columns:1fr;min-height:60vh}
-  .neon-ring{width:260px;height:260px}
-  h2{font-size:42px}
-}
-</style>
-</head>
-<body>
-
-<header>
-  <div class="brand logo-wrap" id="heroLogoUpload">
-    <img id="heroLogo" src="LA2.png" alt="La Vie Noire logo">
-  </div>
-  <div>
-    <h1>La Vie Noire</h1>
-    <p>Members Only • Est. 2025</p>
-  </div>
-  <nav>
-    <a class="nav-link" href="#features">About</a>
-    <a class="nav-link" href="#creators">Creators</a>
-    <a class="nav-link" href="#pricing">Pricing</a>
-    <button class="btn" id="joinBtn">Admin Login</button>
-  </nav>
-</header>
-
-<main>
-<section class="hero">
-  <div class="hero-left">
-    <div class="eyebrow">Exclusive Access</div>
-    <h2>La Vie <span style="color:var(--gold);">Noire</span><br>
-      <small style="font-size:18px;color:var(--muted);display:block;margin-top:6px;font-family:Montserrat">
-      A private marketplace for premium creators — one-time registration to join.
-      </small>
-    </h2>
-
-    <img src="LA2.png" id="centerLogo" alt="La Vie Noire logo" class="hero-logo">
-
-    <p class="lead">No monthly subscriptions. Pay one registration fee to enter and then purchase content or custom requests directly from creators.</p>
-  </div>
-
-  <aside class="card">
-    <div class="neon-ring" aria-hidden="true">
-      <div class="neon-center"><img id="centerLogoThumb" src="LA2.png"></div>
-    </div>
-    <div class="members-only">Members Only!</div>
-    <div style="margin-top:12px;color:var(--muted);font-size:13px">Join now to unlock creators and exclusive content drops.</div>
-  </aside>
-</section>
-
-<section class="content" id="creators"></section>
-
-<section style="padding:18px 4%;" id="pricing">
-  <h3 style="font-family:'Playfair Display',serif;color:var(--gold)">Pricing</h3>
-  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
-    <div style="background:var(--panel);padding:12px;border-radius:10px;min-width:220px;flex:1">
-      <h4 style="margin:0 0 6px;color:var(--accent-red)">Registration</h4>
-      <p class="muted">One-time registration fee: <strong>R280</strong></p>
-    </div>
-  </div>
-</section>
-</main>
-
-<footer>
-<div style="max-width:900px;margin:0 auto">&copy; 2025 La Vie Noire • Built for creators & members. <span class="muted">Privacy & Terms apply</span></div>
-</footer>
-
-<!-- hidden file input -->
-<input type="file" id="fileUploadInput" style="display:none"/>
-
-<!-- admin login modal -->
-<div class="modal" id="adminLoginModal">
+<!-- Add / Edit Card Modal (reused) -->
+<div class="modal" id="cardModal">
   <div class="modal-body">
-    <h3>Admin Login</h3>
-    <div class="field"><input id="adminEmail" placeholder="Email"></div>
-    <div class="field"><input id="adminPass" type="password" placeholder="Password"></div>
-    <div id="adminLoginMsg" class="muted"></div>
+    <h3 id="cardModalTitle">Add Card</h3>
+    <div class="field"><input id="cardTitle" placeholder="Title"></div>
+    <div class="field"><input id="cardTag" placeholder="Tag (e.g. Premium)"></div>
+    <div class="field"><textarea id="cardDesc" placeholder="Description"></textarea></div>
+    <div class="field"><input type="file" id="cardMediaInput"></div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
-      <button class="ghost" onclick="closeAdminLogin()">Cancel</button>
-      <button class="btn" onclick="adminLogin()">Login</button>
+      <button class="ghost" onclick="closeCardModal()">Cancel</button>
+      <button class="btn" id="cardSaveBtn" onclick="saveCard()">Save</button>
     </div>
+    <div id="cardModalMsg" style="color:var(--muted);margin-top:8px"></div>
   </div>
 </div>
 
 <script>
-const API_URL='https://script.google.com/macros/s/AKfycbx87XVHWdVIbzBr7bTrPMTGWmNYmQEBmCFpPDjAbdqIyiclDQ4jmuvbvtOOcki0XrgFAQ/exec';
-const ADMIN_EMAIL='youremail@example.com';
-const ADMIN_PASSWORD='supersecret';
-let isAdmin=false;
-let cards=[];
+/* ===== CONFIG - update if needed ===== */
+const API_URL = 'https://script.google.com/macros/s/AKfycbxJt_B9vTktCZ0hPArSQWifBqeSJA2fXMK4FPo6CPJzPNvH8t0dagsNZPAo5oyvXmvvAQ/exec';
+const ADMIN_EMAIL = 'pieterpoesie7@gmail.com';
+const ADMIN_PASSWORD = 'Poessie';
 
-function openAdminLogin(){ document.getElementById('adminLoginModal').classList.add('open'); }
-function closeAdminLogin(){ document.getElementById('adminLoginModal').classList.remove('open'); }
-function adminLogin(){
-  const email=document.getElementById('adminEmail').value;
-  const pass=document.getElementById('adminPass').value;
-  const msg=document.getElementById('adminLoginMsg');
-  if(email===ADMIN_EMAIL && pass===ADMIN_PASSWORD){ isAdmin=true; closeAdminLogin(); msg.textContent=''; loadCards(); }
-  else{ msg.textContent='Invalid credentials'; }
+/* ===== State ===== */
+let isAdmin = false;
+let cards = [];
+let editingCardId = null; // null for add
+
+/* ===== Helpers ===== */
+function openAdminModal(){ document.getElementById('adminModal').classList.add('open'); }
+function closeAdminModal(){ document.getElementById('adminModal').classList.remove('open'); }
+function openCardModal(mode='add'){ 
+  document.getElementById('cardModalTitle').textContent = mode==='add' ? 'Add New Card' : 'Edit Card';
+  document.getElementById('cardModal').classList.add('open'); 
+}
+function closeCardModal(){ document.getElementById('cardModal').classList.remove('open'); document.getElementById('cardModalMsg').textContent=''; }
+
+/* ===== Admin Login ===== */
+document.getElementById('adminLoginBtn').addEventListener('click', openAdminModal);
+function doAdminLogin(){
+  const email = document.getElementById('adminEmail').value.trim();
+  const pass = document.getElementById('adminPass').value.trim();
+  const msg = document.getElementById('adminMsg');
+  if(!email || !pass){ msg.textContent = 'Enter email & password'; return; }
+  // Local check then enable admin mode (Apps Script also has adminLogin if needed)
+  if(email === ADMIN_EMAIL && pass === ADMIN_PASSWORD){
+    isAdmin = true;
+    msg.textContent = '';
+    closeAdminModal();
+    document.getElementById('addCardHeaderBtn').style.display = 'inline-block';
+    refreshCards();
+  } else {
+    msg.textContent = 'Invalid credentials';
+  }
 }
 
-document.getElementById('joinBtn').addEventListener('click',()=>{ openAdminLogin(); });
-
-async function loadCards(){
-  try{
-    const res=await fetch(API_URL);
-    const data=await res.json();
-    cards=data.cards||[];
+/* ===== Fetch & Render ===== */
+async function refreshCards(){
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    cards = data.cards || [];
     renderCards();
-  }catch(e){ console.error(e); }
+  } catch (err) {
+    console.error('fetch cards error', err);
+    document.getElementById('creators').innerHTML = '<div style="color:tomato;padding:20px">Failed to load cards — check API_URL and Apps Script deployment.</div>';
+  }
 }
 
 function renderCards(){
-  const container=document.getElementById('creators');
-  container.innerHTML='';
-  cards.forEach((c,i)=>{
-    const card=document.createElement('article');
-    card.className='card-item';
-    card.innerHTML=`
-      <div class="tag">${c.tag}</div>
+  const container = document.getElementById('creators');
+  container.innerHTML = '';
+  if(!cards.length){
+    container.innerHTML = '<div style="color:var(--muted);padding:24px">No cards yet. Admin can add new cards.</div>';
+    return;
+  }
+  cards.forEach((c, i) => {
+    const art = document.createElement('article');
+    art.className = 'card-item';
+    art.innerHTML = `
+      <div class="tag">${escapeHtml(c.tag || '')}</div>
       <div class="locked">Locked</div>
       <div class="thumb" id="thumb-${i}">
-        ${c.mediaURL?'<img src="'+c.mediaURL+'" style="width:100%;height:100%;object-fit:cover">':'No media'}
-        ${isAdmin?'<button class="admin-btn" onclick="editMedia('+i+')">Edit</button>':''}
+        ${c.mediaURL ? `<img src="${escapeAttr(c.mediaURL)}" alt="media">` : '<div style="color:var(--muted)">No media</div>'}
       </div>
-      <h3>${c.title}</h3>
-      <p class="muted">${c.description}</p>
+      <h3>${escapeHtml(c.title || '')}</h3>
+      <p class="muted">${escapeHtml(c.description || '')}</p>
     `;
-    container.appendChild(card);
+    if(isAdmin){
+      // admin buttons
+      const editBtn = document.createElement('button');
+      editBtn.textContent = 'Edit';
+      editBtn.className = 'admin-btn';
+      editBtn.onclick = ()=> openEditCard(c);
+      const delBtn = document.createElement('button');
+      delBtn.textContent = 'Delete';
+      delBtn.className = 'admin-btn';
+      delBtn.onclick = ()=> deleteCard(c.id);
+      art.querySelector('.thumb').appendChild(editBtn);
+      art.querySelector('.thumb').appendChild(delBtn);
+    }
+    container.appendChild(art);
   });
 }
 
-function editMedia(index){
-  const input=document.getElementById('fileUploadInput');
-  input.onchange=async(e)=>{
-    const file=e.target.files[0];
-    if(!file) return;
-    const formData=new FormData();
-    formData.append('file',file);
-    formData.append('id',cards[index].id);
-    const res=await fetch(API_URL,{method:'POST',body:formData});
-    const data=await res.json();
-    if(data.ok){ alert('Updated!'); loadCards(); }
-    else{ alert('Upload failed'); }
-    input.value='';
-  };
-  input.click();
+/* ===== Escape helpers ===== */
+function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, (m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[m]); }
+function escapeAttr(s){ return escapeHtml(s); }
+
+/* ===== Add / Edit Card ===== */
+document.getElementById('addCardHeaderBtn').addEventListener('click', ()=>{ editingCardId = null; clearCardModal(); openCardModal('add'); });
+
+function clearCardModal(){
+  document.getElementById('cardTitle').value='';
+  document.getElementById('cardTag').value='';
+  document.getElementById('cardDesc').value='';
+  document.getElementById('cardMediaInput').value='';
+  document.getElementById('cardModalMsg').textContent='';
+  editingCardId = null;
 }
 
-// Hero logo editable
-document.getElementById('heroLogoUpload').addEventListener('click',()=>{
-  if(!isAdmin) return;
-  const input=document.getElementById('fileUploadInput');
-  input.onchange=async(e)=>{
-    const file=e.target.files[0];
-    if(!file) return;
-    const formData=new FormData();
-    formData.append('file',file);
-    formData.append('id','heroLogo');
-    const res=await fetch(API_URL,{method:'POST',body:formData});
-    const data=await res.json();
-    if(data.ok){ document.getElementById('heroLogo').src=data.url; document.getElementById('centerLogo').src=data.url; document.getElementById('centerLogoThumb').src=data.url; alert('Logo updated!'); }
-    input.value='';
-  };
-  input.click();
+function openEditCard(card){
+  editingCardId = card.id;
+  document.getElementById('cardTitle').value = card.title || '';
+  document.getElementById('cardTag').value = card.tag || '';
+  document.getElementById('cardDesc').value = card.description || '';
+  document.getElementById('cardMediaInput').value = '';
+  openCardModal('edit');
+}
+
+async function saveCard(){
+  const title = document.getElementById('cardTitle').value.trim();
+  const tag = document.getElementById('cardTag').value.trim();
+  const desc = document.getElementById('cardDesc').value.trim();
+  const fileInput = document.getElementById('cardMediaInput');
+  const msg = document.getElementById('cardModalMsg');
+
+  if(!title || !tag || !desc){ msg.textContent = 'Title, tag and description are required'; return; }
+  msg.textContent = 'Saving...';
+
+  try {
+    let payload = { action: editingCardId ? 'edit' : 'add', title, tag, description: desc };
+    if(editingCardId) payload.id = editingCardId;
+
+    // if file selected, read as base64 and send
+    if(fileInput.files && fileInput.files[0]){
+      const file = fileInput.files[0];
+      const base64 = await readFileAsDataURL(file);
+      payload.base64 = base64;
+      payload.name = file.name;
+      payload.mime = file.type;
+    }
+
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const result = await res.json();
+    if(result.ok){
+      msg.textContent = 'Saved';
+      closeCardModal();
+      await refreshCards();
+    } else {
+      msg.textContent = 'Save failed: ' + (result.error || result.message || 'unknown');
+      console.error('saveCard error', result);
+    }
+  } catch (err) {
+    msg.textContent = 'Save error: ' + err.toString();
+    console.error(err);
+  }
+}
+
+/* ===== Delete ===== */
+async function deleteCard(id){
+  if(!confirm('Delete this card?')) return;
+  try {
+    const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'delete', id }) });
+    const j = await res.json();
+    if(j.ok){ await refreshCards(); } else { alert('Delete failed: ' + (j.error||j.message)); }
+  } catch (err){ alert('Delete error: '+err); console.error(err); }
+}
+
+/* ===== Hero/logo upload ===== */
+document.getElementById('logoWrap').addEventListener('click', async ()=>{
+  if(!isAdmin) { alert('Admin only'); return; }
+  const file = await pickFile();
+  if(!file) return;
+  try {
+    const base64 = await readFileAsDataURL(file);
+    const payload = { action: 'setHeroLogo', base64, name: file.name, mime: file.type };
+    const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    const j = await res.json();
+    if(j.ok && j.url){
+      document.getElementById('heroLogo').src = j.url;
+      document.getElementById('centerLogo').src = j.url;
+      alert('Hero logo updated');
+    } else {
+      alert('Upload failed: ' + (j.error||j.message));
+    }
+  } catch (err){ alert('Upload error: '+err); console.error(err); }
 });
 
+/* ===== Utility: read file as dataURL ===== */
+function readFileAsDataURL(file){
+  return new Promise((resolve, reject)=>{
+    const fr = new FileReader();
+    fr.onload = ()=> resolve(fr.result);
+    fr.onerror = reject;
+    fr.readAsDataURL(file);
+  });
+}
+function pickFile(){
+  return new Promise(resolve=>{
+    const input = document.getElementById('fileInput');
+    input.onchange = ()=> resolve(input.files[0] || null);
+    input.click();
+  });
+}
+
+/* ===== Init ===== */
+refreshCards();
 </script>
 </body>
 </html>
- 
