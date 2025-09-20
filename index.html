@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>La Vie Noire — Admin CMS (Final)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0b0b; --panel:#111111; --accent-red:#ff1a1a; --gold:#FFD700;
+  --white:#fff; --muted:#bdbdbd; --neon:#00ffff; --btn-green:#013220;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#050505);font-family:Montserrat,system-ui,Arial,sans-serif;color:var(--white)}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px}
+.brand{display:flex;align-items:center;gap:14px}
+.logo-wrap{width:84px;height:84px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.logo-wrap img{width:100%;height:100%;object-fit:cover}
+.nav{display:flex;gap:12px;align-items:center}
+.btn{background:var(--btn-green);color:var(--white);border:none;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:700}
+.ghost{background:transparent;border:1px solid rgba(255,255,255,.08);padding:8px 12px;border-radius:8px}
+.hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;padding:32px 4%;min-height:40vh}
+h2{font-family:'Playfair Display',serif;color:var(--accent-red)}
+.lead{color:var(--muted)}
+.card{background:var(--panel);border-radius:12px;padding:12px;box-shadow:0 12px 30px rgba(0,0,0,.6)}
+.content{padding:18px 4%;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card-item{background:var(--panel);border-radius:12px;padding:12px;position:relative;overflow:hidden}
+.thumb{height:160px;border-radius:8px;background:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden}
+.thumb img, .thumb video{width:100%;height:100%;object-fit:cover;display:block}
+.tag{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;color:var(--gold);font-weight:700}
+.locked{position:absolute;right:12px;top:12px;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;color:var(--accent-red);font-weight:700}
+.admin-bar{position:fixed;right:12px;bottom:12px;display:flex;gap:8px;z-index:999}
+.admin-small{background:var(--neon);color:#000;padding:8px 10px;border-radius:8px;border:none;cursor:pointer}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:999}
+.modal.open{display:flex}
+.modal-body{background:#0d0d0d;padding:20px;border-radius:12px;width:520px;max-width:96%}
+.field{margin-bottom:10px}
+input,textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:transparent;color:var(--white)}
+.admin-btn{background:var(--gold);color:#000;border:none;padding:6px 8px;border-radius:6px;cursor:pointer;font-weight:700;margin-left:6px}
+.exclusive-section { padding:24px 4%; border-top:1px solid rgba(255,255,255,.04); margin-top:24px; }
+.exclusive-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+.excl-card { background:var(--panel); border-radius:12px; padding:10px; position:relative; overflow:hidden; min-height:160px; display:flex; flex-direction:column; }
+.excl-thumb { flex:1; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center; background:#000; position:relative; }
+.excl-thumb img, .excl-thumb video { width:100%; height:100%; object-fit:cover; display:block; }
+.excl-blur::after { content:''; position:absolute; inset:0; backdrop-filter: blur(8px); background: linear-gradient(180deg, rgba(0,0,0,.2), rgba(0,0,0,.45)); z-index:3; }
+.excl-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:4; pointer-events:none; }
+.excl-btn { pointer-events:auto; background:var(--gold); color:#000; border:none; padding:8px 12px; border-radius:8px; font-weight:700; cursor:pointer; }
+.excl-meta { margin-top:10px; color:var(--muted); font-size:13px; }
+.excl-label { position:absolute; left:12px; top:12px; background:rgba(0,0,0,.5); padding:6px 8px; border-radius:6px; color:var(--gold); z-index:5; }
+@media(max-width:880px){ .hero{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand" style="display:flex;align-items:center;gap:14px">
+    <div class="logo-wrap" id="logoWrap"><img id="heroLogo" src="LA2.png" alt="logo"></div>
+    <div>
+      <h2 style="margin:0">La Vie Noire</h2>
+      <div style="color:var(--muted)">Members Only • Est. 2025</div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="btn" id="loginBtn">Admin / Member Login</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <h2>La Vie <span style="color:var(--gold)">Noire</span></h2>
+    <p class="lead">Private marketplace for premium creators — register once, then purchase content per item.</p>
+    <div style="margin-top:12px"><button class="btn" id="addCardBtn" style="display:none">Add New Card</button></div>
+  </div>
+
+  <aside class="card">
+    <div style="text-align:center"><img id="centerLogo" src="LA2.png" alt="center logo" style="max-width:240px;cursor:pointer"></div>
+    <div style="margin-top:12px;color:var(--muted)">Click logo (admin) to update the hero image.</div>
+  </aside>
+</section>
+
+<section class="content" id="creators"></section>
+
+<section class="exclusive-section" id="exclusiveSection" style="display:none">
+  <h3 style="font-family:'Playfair Display',serif;color:var(--gold);margin:0 0 12px">Exclusive Drops (members only)</h3>
+  <div class="exclusive-grid" id="exclusiveGrid"></div>
+</section>
+
+<footer style="padding:24px 4%;color:var(--muted);text-align:center">© 2025 La Vie Noire</footer>
+
+<!-- Hidden file input -->
+<input type="file" id="fileInput" style="display:none" />
+
+<!-- Login Modal -->
+<div class="modal" id="loginModal">
+  <div class="modal-body">
+    <h3>Login</h3>
+    <div class="field"><input id="loginEmail" placeholder="Email"></div>
+    <div class="field"><input id="loginPass" type="password" placeholder="Password"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="ghost" onclick="closeLoginModal()">Cancel</button>
+      <button class="btn" onclick="submitLogin()">Login</button>
+    </div>
+    <div id="loginMsg" style="color:var(--muted);margin-top:8px"></div>
+    <div style="margin-top:6px;color:var(--muted);font-size:13px">Use admin credentials to manage site. Members use the other verification flow.</div>
+  </div>
+</div>
+
+<!-- Add/Edit Card Modal -->
+<div class="modal" id="cardModal">
+  <div class="modal-body">
+    <h3 id="cardModalTitle">Add Card</h3>
+    <div class="field"><input id="cardTitle" placeholder="Title"></div>
+    <div class="field"><input id="cardTag" placeholder="Tag (e.g. Premium / Exclusive)"></div>
+    <div class="field"><textarea id="cardDesc" placeholder="Description"></textarea></div>
+    <div class="field"><input type="file" id="cardMediaInput"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="ghost" onclick="closeCardModal()">Cancel</button>
+      <button class="btn" id="cardSaveBtn" onclick="saveCard()">Save</button>
+    </div>
+    <div id="cardModalMsg" style="color:var(--muted);margin-top:8px"></div>
+  </div>
+</div>
+
+<script>
+/* ================= CONFIG ================= */
+const API_URL = 'https://script.google.com/macros/s/AKfycbxJt_B9vTktCZ0hPArSQWifBqeSJA2fXMK4FPo6CPJzPNvH8t0dagsNZPAo5oyvXmvvAQ/exec';
+
+/* ================= STATE ================= */
+let isAdmin = false;
+let isVerified = false; // members verified state (set by your verification flow)
+let cards = [];
+let editingCardId = null;
+
+/* ================= HELPERS ================= */
+function openLoginModal(){ document.getElementById('loginModal').classList.add('open'); }
+function closeLoginModal(){ document.getElementById('loginModal').classList.remove('open'); }
+function openCardModal(mode='add'){ document.getElementById('cardModalTitle').textContent = mode === 'add' ? 'Add New Card' : 'Edit Card'; document.getElementById('cardModal').classList.add('open'); }
+function closeCardModal(){ document.getElementById('cardModal').classList.remove('open'); document.getElementById('cardModalMsg').textContent=''; }
+
+/* escape helper */
+function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, (m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[m]); }
+
+/* ================= LOGIN (server-side) ================= */
+document.getElementById('loginBtn').addEventListener('click', openLoginModal);
+
+async function submitLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+  const msg = document.getElementById('loginMsg');
+  if(!email || !pass){ msg.textContent = 'Enter email and password'; return; }
+  msg.textContent = 'Logging in...';
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ action: 'adminLogin', email, password: pass })
+    });
+    const j = await res.json();
+    if(j.ok){
+      isAdmin = true;
+      isVerified = true; // admin is implicitly verified
+      msg.textContent = 'Admin verified';
+      closeLoginModal();
+      document.getElementById('addCardBtn').style.display = 'inline-block';
+      await refreshAll();
+    } else {
+      // Could be member login vs admin; if you have member verification endpoint, call that here.
+      msg.textContent = 'Invalid credentials';
+    }
+  } catch (err) {
+    console.error(err);
+    msg.textContent = 'Login error';
+  }
+}
+
+/* ================= FETCH & RENDER CARDS ================= */
+async function fetchCardsRaw(){
+  const res = await fetch(API_URL);
+  return await res.json(); // expects { cards: [...] }
+}
+
+async function refreshCards(){
+  try {
+    const data = await fetchCardsRaw();
+    cards = data.cards || [];
+    renderCards();
+    renderExclusive();
+  } catch (err) {
+    console.error('fetch cards error', err);
+    document.getElementById('creators').innerHTML = '<div style="color:tomato;padding:20px">Failed to load cards — check API_URL and Apps Script deployment.</div>';
+  }
+}
+
+function renderCards(){
+  const container = document.getElementById('creators');
+  container.innerHTML = '';
+  if(!cards.length){
+    container.innerHTML = '<div style="color:var(--muted);padding:24px">No cards yet. Admin can add new cards.</div>';
+    return;
+  }
+  cards.forEach(c=>{
+    const art = document.createElement('article');
+    art.className = 'card-item';
+    art.innerHTML = `
+      <div class="tag">${escapeHtml(c.tag||'')}</div>
+      <div class="locked">${c.locked ? 'Locked' : ''}</div>
+      <div class="thumb">${c.mediaURL ? (isVideoURL(c.mediaURL) ? `<video src="${escapeHtml(c.mediaURL)}" muted playsinline></video>` : `<img src="${escapeHtml(c.mediaURL)}">`) : '<div style="color:var(--muted)">No media</div>'}</div>
+      <h3>${escapeHtml(c.title||'')}</h3>
+      <p class="muted">${escapeHtml(c.description||'')}</p>
+    `;
+    if(isAdmin){
+      const thumb = art.querySelector('.thumb');
+      const editBtn = document.createElement('button'); editBtn.className='admin-btn'; editBtn.textContent='Edit';
+      editBtn.onclick = ()=> openEditCard(c);
+      const delBtn = document.createElement('button'); delBtn.className='admin-btn'; delBtn.textContent='Delete';
+      delBtn.onclick = ()=> deleteCard(c.id);
+      thumb.appendChild(editBtn); thumb.appendChild(delBtn);
+      thumb.style.position='relative';
+      thumb.addEventListener('click', (e)=>{}); // leave default
+    }
+    container.appendChild(art);
+  });
+}
+
+/* ================= EXCLUSIVE section (members only) ================= */
+function isVideoURL(url){
+  return /\.(mp4|webm|ogg)(\?|$)/i.test(url) || url.indexOf('video')!==-1;
+}
+
+function renderExclusive(){
+  const excl = document.getElementById('exclusiveSection');
+  const grid = document.getElementById('exclusiveGrid');
+  const items = cards.filter(c => String(c.tag||'').toLowerCase().includes('exclusive'));
+  if(!items.length){ excl.style.display='none'; return; }
+  excl.style.display = '';
+  grid.innerHTML = '';
+  items.forEach(item=>{
+    const locked = !!item.locked;
+    const allowed = !locked || isAdmin || isVerified;
+    const card = document.createElement('article'); card.className='excl-card';
+    const label = document.createElement('div'); label.className='excl-label'; label.textContent = locked ? 'Members' : 'Public'; card.appendChild(label);
+    const thumb = document.createElement('div'); thumb.className='excl-thumb';
+    if(isVideoURL(item.mediaURL)){
+      const v = document.createElement('video'); v.src = item.mediaURL || ''; v.controls = allowed; v.setAttribute('preload','metadata'); if(!allowed){ v.muted=true; v.style.filter='blur(4px) brightness(.6)'; }
+      thumb.appendChild(v);
+    } else {
+      const img = document.createElement('img'); img.src = item.mediaURL || ''; if(!allowed) img.classList.add('excl-blur');
+      thumb.appendChild(img);
+    }
+    if(!allowed){
+      thumb.classList.add('excl-blur');
+      const overlay = document.createElement('div'); overlay.className='excl-overlay';
+      const btn = document.createElement('button'); btn.className='excl-btn'; btn.textContent='Unlock — verify';
+      btn.onclick = ()=> { if(typeof openVerify === 'function') openVerify(); else openLoginModal(); };
+      overlay.appendChild(btn); thumb.appendChild(overlay);
+    } else {
+      thumb.addEventListener('click', ()=> {
+        const v = thumb.querySelector('video'); if(v) v.paused ? v.play() : v.pause();
+      });
+    }
+    card.appendChild(thumb);
+    const meta = document.createElement('div'); meta.className='excl-meta'; meta.innerHTML = `<strong>${escapeHtml(item.title||'')}</strong><div style="color:var(--muted)">${escapeHtml(item.description||'')}</div>`; card.appendChild(meta);
+    grid.appendChild(card);
+  });
+}
+
+/* ================= ADD / EDIT / DELETE flows ================= */
+document.getElementById('addCardBtn').addEventListener('click', ()=>{
+  editingCardId = null;
+  document.getElementById('cardTitle').value=''; document.getElementById('cardTag').value=''; document.getElementById('cardDesc').value='';
+  document.getElementById('cardMediaInput').value='';
+  openCardModal('add');
+});
+
+function openEditCard(card){
+  editingCardId = card.id;
+  document.getElementById('cardTitle').value = card.title||'';
+  document.getElementById('cardTag').value = card.tag||'';
+  document.getElementById('cardDesc').value = card.description||'';
+  document.getElementById('cardMediaInput').value = '';
+  openCardModal('edit');
+}
+
+async function saveCard(){
+  const title = document.getElementById('cardTitle').value.trim();
+  const tag = document.getElementById('cardTag').value.trim();
+  const desc = document.getElementById('cardDesc').value.trim();
+  const fileInput = document.getElementById('cardMediaInput');
+  const msg = document.getElementById('cardModalMsg');
+  if(!title || !tag || !desc){ msg.textContent = 'Title, tag and description required'; return; }
+  msg.textContent = 'Saving...';
+
+  try {
+    let payload = { action: editingCardId ? 'edit' : 'add', title, tag, description: desc };
+    if(editingCardId) payload.id = editingCardId;
+
+    if(fileInput.files && fileInput.files[0]){
+      const file = fileInput.files[0];
+      payload.name = file.name; payload.mime = file.type;
+      payload.base64 = await readFileAsDataURL(file);
+    }
+
+    const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    const j = await res.json();
+    if(j.ok){
+      msg.textContent = 'Saved';
+      closeCardModal();
+      await refreshCards();
+    } else {
+      msg.textContent = 'Save failed: ' + (j.error||j.message||'unknown');
+      console.error('saveCard error', j);
+    }
+  } catch (err){
+    msg.textContent = 'Save error: ' + err.toString();
+    console.error(err);
+  }
+}
+
+async function deleteCard(id){
+  if(!confirm('Delete this card?')) return;
+  try {
+    const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'delete', id }) });
+    const j = await res.json();
+    if(j.ok) await refreshCards();
+    else alert('Delete failed: ' + (j.error || j.message));
+  } catch (err){ console.error(err); alert('Delete error'); }
+}
+
+/* ================= HERO UPLOAD ================= */
+document.getElementById('logoWrap').addEventListener('click', async ()=>{
+  if(!isAdmin){ alert('Admin only'); return; }
+  const file = await pickFile();
+  if(!file) return;
+  try {
+    const base64 = await readFileAsDataURL(file);
+    const payload = { action: 'setHeroLogo', base64, name: file.name, mime: file.type };
+    const res = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    const j = await res.json();
+    if(j.ok && j.url){
+      document.getElementById('heroLogo').src = j.url;
+      document.getElementById('centerLogo').src = j.url;
+      alert('Hero updated');
+    } else {
+      alert('Upload failed: ' + (j.error||j.message));
+    }
+  } catch (err){ console.error(err); alert('Upload error'); }
+});
+
+/* ================= UTIL ================= */
+function readFileAsDataURL(file){ return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>res(fr.result); fr.onerror=rej; fr.readAsDataURL(file); }); }
+function pickFile(){ return new Promise(resolve=>{ const input = document.getElementById('fileInput'); input.onchange = ()=> resolve(input.files[0]||null); input.click(); }); }
+
+/* ================= REFRESH EVERYTHING ================= */
+async function refreshAll(){
+  await refreshCards();
+}
+
+/* ================= INIT ================= */
+refreshAll();
+</script>
+</body>
+</html>
