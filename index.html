@@ -3,9 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>La Vie Noire — Members & Creators (Admin Upload Ready)</title>
+<title>La Vie Noire — Admin Upload Enabled</title>
 
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
@@ -13,9 +12,13 @@
 <script src="https://www.paypal.com/sdk/js?client-id=BAAFPhooaEcCM6amSCsOO9bsC7IG6d_QgU2s9ZnwyJ-33UeaUMUua6hDIC2B9W6siS85aYIT1rDtPICzUk&components=hosted-buttons&disable-funding=venmo&currency=USD" defer></script>
 
 <style>
-  :root{--bg:#0b0b0b;--panel:#111111;--accent-red:#d10b0b;--gold:#FFD700;--white:#fff;--muted:#bdbdbd;--neon-cyan:#00ffff;--neon-magenta:#ff00ff;--neon-yellow:#ffff66}
+  :root{
+    --bg:#0b0b0b;--panel:#111111;--accent-red:#d10b0b;--gold:#FFD700;--white:#fff;--muted:#bdbdbd;
+    --neon-cyan:#00ffff;--neon-magenta:#ff00ff;--neon-yellow:#ffff66;
+  }
   *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Montserrat,system-ui,Arial,sans-serif;color:var(--white);background:linear-gradient(45deg,#ff0055,#00ffff,#ff00ff,#00ff55);background-size:600% 600%;animation:neonBG 18s ease infinite}
+  html,body{height:100%;margin:0;font-family:Montserrat,system-ui,Arial,sans-serif;color:var(--white);
+    background:linear-gradient(45deg,#ff0055,#00ffff,#ff00ff,#00ff55);background-size:600% 600%;animation:neonBG 18s ease infinite}
   @keyframes neonBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
   a{color:var(--white);text-decoration:none}
   header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(0,0,0,.28);backdrop-filter:blur(4px)}
@@ -33,11 +36,13 @@
   h2{font-family:'Playfair Display',serif;font-size:40px;margin:6px 0;color:var(--accent-red);text-shadow:0 8px 28px rgba(209,11,11,.12)}
   p.lead{color:var(--muted);max-width:64ch;font-size:15px}
   .card{background:var(--panel);border-radius:14px;padding:16px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-  .neon-ring{width:220px;height:220px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 0 20px var(--neon-cyan)}
+  .neon-ring{width:220px;height:220px;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 0 20px var(--neon-cyan)}
   .neon-center img{max-width:160px;max-height:160px}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
   .product{background:var(--panel);border-radius:12px;padding:12px;position:relative;min-height:220px;overflow:hidden}
   .thumb{height:120px;border-radius:8px;background:#000;display:flex;align-items:center;justify-content:center;color:var(--muted);margin-bottom:10px;background-size:cover;background-position:center}
+  .thumb.admin-editable{ outline: 2px dashed rgba(0,255,255,0.15); }
+  .thumb[data-hint]:hover::after{ content: attr(data-hint); position: absolute; transform: translateY(6px); background: rgba(0,0,0,0.7); padding:6px 8px; border-radius:6px; font-size:12px; top:110px; color:var(--muted); white-space:nowrap; }
   .tag{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;font-weight:700;color:var(--gold)}
   .locked-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent-red);background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3));backdrop-filter:blur(2px);border-radius:12px}
   .buy{display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap}
@@ -53,7 +58,7 @@
   .admin-panel{display:flex;flex-direction:column;gap:8px}
   .small{font-size:13px;color:var(--muted)}
   .log-list{max-height:200px;overflow:auto;border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:6px;background:rgba(255,255,255,0.02)}
-  @media(max-width:860px){.hero{grid-template-columns:1fr}h2{font-size:32px}.neon-ring{display:none}}
+  @media(max-width:860px){ .hero{grid-template-columns:1fr} h2{font-size:32px} .neon-ring{display:none} }
 </style>
 </head>
 <body>
@@ -81,7 +86,7 @@
     <div>
       <div class="eyebrow">Exclusive Access</div>
       <h2>La Vie <span style="color:var(--gold)">Noire</span></h2>
-      <p class="lead">Browse content from multiple creators. Thumbnails & titles are public; full content requires purchase or membership.</p>
+      <p class="lead">Browse content from multiple creators. Thumbnails are visible to all; full content requires purchase or membership.</p>
 
       <div id="paypal-registration"></div>
       <div class="small muted" style="margin-top:8px">Registration fee (one-time): R280 (USD via PayPal)</div>
@@ -114,12 +119,10 @@
   <section id="products" style="margin-top:22px">
     <div class="section-head">
       <h3 style="margin:0">Products & Creator Content</h3>
-      <div class="small muted">Click a product to pay or register. Thumbnails are visible to all; full content requires purchase or membership.</div>
+      <div class="small muted">Click a product thumbnail (admin only) to upload or change images from any device.</div>
     </div>
 
-    <div id="productsGrid" class="grid" style="margin-top:12px">
-      <!-- JS will render 6 product cards here -->
-    </div>
+    <div id="productsGrid" class="grid" style="margin-top:12px"></div>
   </section>
 
   <section id="creators" style="margin-top:22px">
@@ -136,6 +139,9 @@
   </footer>
 </main>
 
+<!-- Hidden global file input used for admin uploads (works on mobile) -->
+<input id="globalImageUploader" type="file" accept="image/*" style="display:none" />
+
 <!-- ADMIN modal -->
 <div class="modal" id="adminModal" aria-hidden="true">
   <div class="modal-card">
@@ -144,17 +150,20 @@
       <button class="ghost" id="closeAdmin">Close</button>
     </div>
     <div class="admin-panel">
-      <label>Email</label><input id="adminEmail" placeholder="admin@example.com">
-      <label>Password</label><input id="adminPassword" type="password" placeholder="password">
-      <div style="display:flex;gap:8px">
-        <button class="btn" id="adminLoginBtn">Login</button>
-        <button class="ghost" id="adminCancel">Cancel</button>
-      </div>
+      <form id="adminForm" onsubmit="return false;" style="display:flex;flex-direction:column;gap:8px">
+        <label>Email</label><input id="adminEmail" placeholder="admin@example.com" autocomplete="username">
+        <label>Password</label><input id="adminPassword" type="password" placeholder="password" autocomplete="current-password">
+        <div style="display:flex;gap:8px">
+          <button class="btn" id="adminLoginBtn" type="submit">Login</button>
+          <button class="ghost" id="adminCancel" type="button">Cancel</button>
+        </div>
+      </form>
+
       <div id="adminMsg" class="small muted"></div>
 
       <div id="adminActions" style="display:none;margin-top:12px">
         <strong>Edit mode</strong>
-        <div class="small muted">Enable edit to change titles and upload thumbnails. Saves locally and to Apps Script (Drive & Sheet).</div>
+        <div class="small muted">Enable edit to change titles and upload thumbnails by tapping thumbnails.</div>
         <div style="display:flex;gap:8px;margin-top:8px">
           <button class="btn" id="toggleEdit">Enable edit</button>
           <button class="ghost" id="saveAll">Save (local + server)</button>
@@ -173,14 +182,14 @@
 
 <script>
 /* =================== CONFIG ===================
- - APPS_SCRIPT_URL: your Apps Script Web App URL (you provided)
- - SECRET must match the SECRET set in the Apps Script (see the script below).
- - ADMIN credentials are the ones you requested.
+ - APPS_SCRIPT_URL: your Apps Script Web App URL (already set)
+ - SECRET must match the SECRET set in the Apps Script
+ - ADMIN credentials are stored client-side (insecure but as requested)
 =================================================*/
 const CONFIG = {
   registration: { hostedButtonId: "K675H2HXL9XLY", storageKey: "lvn_reg" },
   APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzI4STUQfuaWTBY5i1v52TzL7g0texUM_E2_l-7cfSbp5Ba4gO0bfXQ2sEFyZUj5wnANw/exec",
-  SECRET: "LvNSecret2025", // <-- MUST match Apps Script SECRET below (change both if you like)
+  SECRET: "LvNSecret2025", // must match the Apps Script SECRET
   ADMIN: { email: "pieterpoesie7@gmail.com", password: "Poessie" }
 };
 
@@ -194,17 +203,17 @@ const INITIAL_PRODUCTS = [
   { id: "p6", title: "Exclusive Voice Message", priceZAR: 25, tag: "Custom", thumb: "", hostedButtonId: CONFIG.registration.hostedButtonId }
 ];
 
-/* ========== localStorage helpers ========== */
+/* ========== storage helpers ========== */
 function saveJSON(key, value){ try{ localStorage.setItem(key, JSON.stringify(value)); }catch(e){console.warn(e);} }
-function loadJSON(key){ try{ const r=localStorage.getItem(key); return r?JSON.parse(r):null;}catch(e){return null;} }
+function loadJSON(key){ try{ const r=localStorage.getItem(key); return r?JSON.parse(r):null; }catch(e){return null;} }
 
-/* seed storage if not present */
+/* seed on first load */
 if(!loadJSON('lvn_products')) saveJSON('lvn_products', INITIAL_PRODUCTS);
 if(!loadJSON('lvn_creators')) saveJSON('lvn_creators', []);
 if(!loadJSON('lvn_purchases')) saveJSON('lvn_purchases', {});
 if(!loadJSON(CONFIG.registration.storageKey)) saveJSON(CONFIG.registration.storageKey, { verified:false });
 
-/* ======= UI helpers ======= */
+/* ====== UI rendering ====== */
 function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 function renderProducts(){
@@ -218,7 +227,7 @@ function renderProducts(){
     card.id = 'product-' + p.id;
     card.innerHTML = `
       <div class="tag">${escapeHtml(p.tag)}</div>
-      <div class="thumb" id="thumb-${p.id}" style="${p.thumb ? 'background-image:url('+encodeURI(p.thumb)+')' : ''}">${p.thumb ? '' : 'Thumbnail'}</div>
+      <div class="thumb" id="thumb-${p.id}" style="${p.thumb ? 'background-image:url('+encodeURI(p.thumb)+')' : ''}" data-product-id="${p.id}" ${p.thumb ? '' : ''}>${p.thumb ? '' : 'Thumbnail'}</div>
       <h4 data-field="title">${escapeHtml(p.title)}</h4>
       <div class="small muted">${p.priceZAR ? 'R'+p.priceZAR : ''}</div>
       <p data-field="desc" class="muted">Preview available. Full access after purchase or membership.</p>
@@ -239,7 +248,7 @@ function renderCreators(){
     el.id = 'creator-' + c.id;
     el.innerHTML = `
       <div class="tag">Creator</div>
-      <div class="thumb" id="creator-thumb-${c.id}" style="${c.thumb ? 'background-image:url('+encodeURI(c.thumb)+')' : ''}">${c.thumb ? '' : 'No image'}</div>
+      <div class="thumb" id="creator-thumb-${c.id}" style="${c.thumb ? 'background-image:url('+encodeURI(c.thumb)+')' : ''}" data-creator-id="${c.id}">${c.thumb ? '' : 'No image'}</div>
       <h4 data-field="name">${escapeHtml(c.name)}</h4>
       <div class="small muted">${escapeHtml(c.email)}</div>
       <p data-field="bio" class="muted">${escapeHtml(c.bio || '')}</p>
@@ -248,7 +257,7 @@ function renderCreators(){
   });
 }
 
-/* ======= unlocking & purchases ======= */
+/* ====== purchase & registration state ====== */
 function isProductUnlocked(productId){
   const purchases = loadJSON('lvn_purchases') || {};
   return purchases[productId] && purchases[productId].unlocked;
@@ -258,38 +267,43 @@ function unlockProduct(productId){
   purchases[productId] = { unlocked:true, ts: Date.now() };
   saveJSON('lvn_purchases', purchases);
   const overlay = document.getElementById('overlay-' + productId);
-  if(overlay) overlay.style.display = 'none';
+  if (overlay) overlay.style.display = 'none';
   const buyArea = document.getElementById('buy-' + productId);
-  if(buyArea) buyArea.innerHTML = '<span style="color:var(--gold);font-weight:700">Access granted — check your account</span>';
+  if (buyArea) buyArea.innerHTML = '<span style="color:var(--gold);font-weight:700">Access granted — check your account</span>';
   logActivity({ type: 'purchase', productId, ts: Date.now() });
 }
-
-function isMemberVerified(){ const r = loadJSON(CONFIG.registration.storageKey) || { verified:false }; return r.verified === true; }
-function setMemberVerified(data){ saveJSON(CONFIG.registration.storageKey, { verified:true, tx:data, ts:Date.now() }); document.querySelectorAll('.locked-overlay').forEach(o=>o.style.display='none'); logActivity({ type:'registration', data, ts: Date.now() }); }
-
-/* ======= Apps Script POST helper (with secret) ======= */
-function postToAppsScript(payload){
-  if(!CONFIG.APPS_SCRIPT_URL) return Promise.resolve({ ok:false, error:'No APPS_SCRIPT_URL set' });
-  // attach shared secret
-  payload.secret = CONFIG.SECRET;
-  return fetch(CONFIG.APPS_SCRIPT_URL, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(payload)
-  }).then(r=>r.json()).catch(e=>({ ok:false, error: e.toString() }));
+function isMemberVerified(){
+  const r = loadJSON(CONFIG.registration.storageKey) || { verified:false };
+  return r.verified === true;
+}
+function setMemberVerified(data){
+  saveJSON(CONFIG.registration.storageKey, { verified:true, tx:data, ts:Date.now() });
+  document.querySelectorAll('.locked-overlay').forEach(o => o.style.display = 'none');
+  logActivity({ type: 'registration', data, ts: Date.now() });
 }
 
-/* ======= PayPal rendering ======= */
+/* ====== Apps Script helper (with secret) ====== */
+function postToAppsScript(payload){
+  if(!CONFIG.APPS_SCRIPT_URL) return Promise.resolve({ ok:false, error:'No APPS_SCRIPT_URL set' });
+  payload.secret = CONFIG.SECRET;
+  return fetch(CONFIG.APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  }).then(r => r.json()).catch(e => ({ ok:false, error: e.toString() }));
+}
+
+/* ====== PayPal buttons ====== */
 function renderPayPalButtonsWhenReady(){
   if(!window.paypal || !paypal.HostedButtons) return setTimeout(renderPayPalButtonsWhenReady, 250);
 
   try{
     paypal.HostedButtons({
       hostedButtonId: CONFIG.registration.hostedButtonId,
-      onApprove: function(data, actions){
+      onApprove: function(data){
         setMemberVerified(data);
         alert('Registration complete — you are now a verified member.');
-        postToAppsScript({ action:'registration', payload:{ paypal: data } }).then(res=>console.log('server reg',res));
+        postToAppsScript({ action:'registration', payload:{ paypal: data } });
       },
       onError: function(err){ console.error('PayPal registration error', err); alert('Registration error'); }
     }).render('#paypal-registration');
@@ -303,10 +317,10 @@ function renderPayPalButtonsWhenReady(){
       const hostedId = p.hostedButtonId || CONFIG.registration.hostedButtonId;
       paypal.HostedButtons({
         hostedButtonId: hostedId,
-        onApprove: function(data, actions){
+        onApprove: function(data){
           unlockProduct(p.id);
           alert('Payment successful — product unlocked.');
-          postToAppsScript({ action:'purchase', payload:{ productId: p.id, paypal: data } }).then(res=>console.log('server purchase',res));
+          postToAppsScript({ action:'purchase', payload:{ productId: p.id, paypal: data } });
         },
         onError: function(err){ console.error('PayPal item error', err); alert('Payment error'); }
       }).render('#paypal-btn-' + p.id);
@@ -314,9 +328,10 @@ function renderPayPalButtonsWhenReady(){
   });
 }
 
-/* ======= Creator signup (sends images to Apps Script) ======= */
+/* ====== Creator signup ====== */
 document.getElementById('openCreatorSignup').addEventListener('click', ()=> {
-  const p = document.getElementById('creatorSignupPanel'); p.style.display = p.style.display === 'none' ? 'block' : 'none';
+  const p = document.getElementById('creatorSignupPanel');
+  p.style.display = p.style.display === 'none' ? 'block' : 'none';
 });
 document.getElementById('cancelCreator').addEventListener('click', ()=> { document.getElementById('creatorSignupPanel').style.display = 'none'; });
 
@@ -339,10 +354,14 @@ document.getElementById('createCreator').addEventListener('click', ()=> {
         if(res && res.ok){
           const localCreators = loadJSON('lvn_creators') || [];
           localCreators.push({ id, name, email, bio, thumb: res.url || creator.thumbBase64 });
-          saveJSON('lvn_creators', localCreators); renderCreators();
-          msg.textContent = 'Creator created and uploaded.'; logActivity({ type:'creator_signup', creator:{ id, name, email }, ts: Date.now() });
+          saveJSON('lvn_creators', localCreators);
+          renderCreators();
+          msg.textContent = 'Creator created and uploaded.';
+          logActivity({ type:'creator_signup', creator:{ id, name, email }, ts: Date.now() });
           setTimeout(()=>{ document.getElementById('creatorSignupPanel').style.display='none'; msg.textContent=''; }, 900);
-        } else { msg.textContent = res.error || 'Server error'; }
+        } else {
+          msg.textContent = res.error || 'Server error saving creator';
+        }
       });
     };
     fr.readAsDataURL(fileInput.files[0]);
@@ -350,29 +369,38 @@ document.getElementById('createCreator').addEventListener('click', ()=> {
     postToAppsScript({ action:'creator_signup', payload: creator }).then(res=>{
       const localCreators = loadJSON('lvn_creators') || [];
       localCreators.push({ id, name, email, bio, thumb: '' });
-      saveJSON('lvn_creators', localCreators); renderCreators();
-      msg.textContent = res.ok ? 'Creator created.' : (res.error || 'Error'); logActivity({ type:'creator_signup', creator:{ id, name, email }, ts: Date.now() });
+      saveJSON('lvn_creators', localCreators);
+      renderCreators();
+      msg.textContent = res.ok ? 'Creator created.' : (res.error || 'Error');
+      logActivity({ type:'creator_signup', creator:{ id, name, email }, ts: Date.now() });
       setTimeout(()=>{ document.getElementById('creatorSignupPanel').style.display='none'; msg.textContent=''; }, 900);
     });
   }
 });
 
-/* ======= Admin UI & inline edit/upload ======= */
+/* ====== Admin UI & upload (centralized input + delegation) ====== */
 const adminModal = document.getElementById('adminModal');
 const openAdminBtn = document.getElementById('openAdmin');
 const closeAdminBtn = document.getElementById('closeAdmin');
+const adminLoginForm = document.getElementById('adminForm');
 const adminLoginBtn = document.getElementById('adminLoginBtn');
 const adminLogoutBtn = document.getElementById('logoutAdmin');
 const adminMsg = document.getElementById('adminMsg');
 const adminLogEl = document.getElementById('adminLog');
+const globalUploader = document.getElementById('globalImageUploader');
+
 let adminLoggedIn = false;
 let editMode = false;
+let lastUploadTarget = null; // {type:'product'|'creator', id: 'p1'}
 
+/* open/close admin modal */
 openAdminBtn.addEventListener('click', ()=> { adminModal.classList.add('open'); adminModal.setAttribute('aria-hidden','false'); });
 closeAdminBtn.addEventListener('click', ()=> { adminModal.classList.remove('open'); adminModal.setAttribute('aria-hidden','true'); });
 document.getElementById('adminCancel').addEventListener('click', ()=> { adminModal.classList.remove('open'); });
 
-adminLoginBtn.addEventListener('click', ()=> {
+/* admin login submit */
+adminLoginForm.addEventListener('submit', (ev)=> {
+  ev.preventDefault();
   const em = document.getElementById('adminEmail').value.trim();
   const pw = document.getElementById('adminPassword').value;
   if(em === CONFIG.ADMIN.email && pw === CONFIG.ADMIN.password){
@@ -380,50 +408,42 @@ adminLoginBtn.addEventListener('click', ()=> {
     adminMsg.textContent = 'Admin logged in ✅';
     document.getElementById('adminActions').style.display = 'block';
     refreshAdminLog();
-  } else { adminMsg.textContent = 'Invalid credentials'; }
+    // visually mark thumbs as editable when editMode is on
+    updateThumbEditableState();
+  } else {
+    adminMsg.textContent = 'Invalid credentials';
+  }
 });
 
-/* Enable edit & attach upload handlers */
+/* toggle edit mode - when enabled, clicking a thumb triggers upload (via globalUploader) */
 document.getElementById('toggleEdit').addEventListener('click', ()=>{
   if(!adminLoggedIn){ alert('Login as admin first'); return; }
   editMode = !editMode;
-  document.querySelectorAll('#productsGrid .product, #creatorsGrid .product').forEach(card=>{
-    const thumb = card.querySelector('.thumb');
-    const editableFields = card.querySelectorAll('[data-field]');
-    if(editMode){
-      card.style.outline = '2px dashed rgba(255,255,255,0.06)';
-      editableFields.forEach(el => el.contentEditable = true);
-      if(thumb){ thumb.style.cursor = 'pointer'; thumb.addEventListener('click', adminThumbUploadHandler); }
-    } else {
-      card.style.outline = 'none';
-      editableFields.forEach(el => el.contentEditable = false);
-      if(thumb){ thumb.style.cursor = ''; thumb.removeEventListener('click', adminThumbUploadHandler); }
-    }
-  });
   document.getElementById('toggleEdit').textContent = editMode ? 'Exit edit' : 'Enable edit';
+  updateThumbEditableState();
 });
 
-/* Save all: persist local snapshot to Apps Script (save_snapshot) */
+/* Save snapshot to server */
 document.getElementById('saveAll').addEventListener('click', ()=>{
   if(!adminLoggedIn){ alert('Login as admin first'); return; }
   const products = [];
   document.querySelectorAll('#productsGrid .product').forEach(card=>{
     const id = card.id.replace('product-','');
-    const title = card.querySelector('[data-field="title"]').textContent.trim();
-    const desc = card.querySelector('[data-field="desc"]').textContent.trim();
+    const title = (card.querySelector('[data-field="title"]') || {}).textContent || '';
+    const desc = (card.querySelector('[data-field="desc"]') || {}).textContent || '';
     const priceText = card.querySelector('.small') ? card.querySelector('.small').textContent.trim() : '';
     const price = priceText.match(/R(\d+)/) ? parseInt(priceText.match(/R(\d+)/)[1]) : 0;
     const thumbEl = card.querySelector('.thumb');
     const thumbStyle = thumbEl ? (thumbEl.style.backgroundImage ? thumbEl.style.backgroundImage.slice(5,-2) : '') : '';
-    const tag = card.querySelector('.tag') ? card.querySelector('.tag').textContent.trim() : '';
+    const tag = (card.querySelector('.tag') || {}).textContent || '';
     products.push({ id, title, desc, priceZAR: price, thumb: thumbStyle, tag, hostedButtonId: CONFIG.registration.hostedButtonId });
   });
   const creators = [];
   document.querySelectorAll('#creatorsGrid .product').forEach(card=>{
     const id = card.id.replace('creator-','');
-    const name = card.querySelector('[data-field="name"]').textContent.trim();
+    const name = (card.querySelector('[data-field="name"]') || {}).textContent || '';
     const email = card.querySelector('.small') ? card.querySelector('.small').textContent.trim() : '';
-    const bio = card.querySelector('[data-field="bio"]').textContent.trim();
+    const bio = (card.querySelector('[data-field="bio"]') || {}).textContent || '';
     const thumbEl = card.querySelector('.thumb');
     const thumbStyle = thumbEl ? (thumbEl.style.backgroundImage ? thumbEl.style.backgroundImage.slice(5,-2) : '') : '';
     creators.push({ id, name, email, bio, thumb: thumbStyle });
@@ -431,71 +451,100 @@ document.getElementById('saveAll').addEventListener('click', ()=>{
 
   saveJSON('lvn_products', products);
   saveJSON('lvn_creators', creators);
-
   postToAppsScript({ action:'save_snapshot', payload:{ products, creators } }).then(res=>{
     alert(res && res.ok ? 'Saved to server' : ('Saved locally. Server error: '+(res.error||'unknown')));
     logActivity({ type: 'admin_save', ts: Date.now() });
   });
 });
 
-/* Admin logout */
-adminLogoutBtn && adminLogoutBtn.addEventListener('click', ()=>{
+/* admin logout */
+adminLogoutBtn && adminLogoutBtn.addEventListener('click', ()=> {
   adminLoggedIn = false;
   document.getElementById('adminActions').style.display = 'none';
   adminMsg.textContent = 'Logged out';
+  updateThumbEditableState();
 });
 
-/* Admin thumbnail upload handler -> uploads image to Apps Script which saves to Drive and returns URL */
-function adminThumbUploadHandler(e){
-  if(!adminLoggedIn){ alert('Login as admin to upload'); return; }
-  const thumbEl = e.currentTarget;
-  const id = thumbEl.id || '';
-  // determine whether it's product or creator: thumb-productId or creator-thumb-cid
-  let targetType = 'product'; let targetId = '';
-  const m = id.match(/thumb-(.+)/);
-  if(m){ targetType = 'product'; targetId = m[1]; }
-  const m2 = id.match(/creator-thumb-(.+)/);
-  if(m2){ targetType = 'creator'; targetId = m2[1]; }
-  // choose file
-  const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
-  input.onchange = () => {
-    const file = input.files[0]; if(!file) return;
-    const fr = new FileReader();
-    fr.onload = ev => {
-      const base64 = ev.target.result; // data:image/...;base64,...
-      // call Apps Script to save image
-      postToAppsScript({ action:'upload_image', payload:{ filename: `${targetType}_${targetId}_${Date.now()}.png`, data: base64 } })
-        .then(res=>{
-          if(res && res.ok && res.url){
-            // update thumb locally and optionally in server via save_snapshot
-            thumbEl.style.backgroundImage = `url(${res.url})`; thumbEl.textContent = '';
-            // update local storage product/creator record
-            if(targetType === 'product'){
-              const products = loadJSON('lvn_products') || [];
-              const idx = products.findIndex(p=>p.id===targetId);
-              if(idx>=0){ products[idx].thumb = res.url; saveJSON('lvn_products', products); }
-            } else {
-              const creators = loadJSON('lvn_creators') || [];
-              const idx = creators.findIndex(c=>c.id===targetId);
-              if(idx>=0){ creators[idx].thumb = res.url; saveJSON('lvn_creators', creators); }
-            }
-            // persist snapshot server-side
-            const products = loadJSON('lvn_products') || [];
-            const creators = loadJSON('lvn_creators') || [];
-            postToAppsScript({ action:'save_snapshot', payload:{ products, creators } }).then(r=>console.log('snapshot after upload',r));
-            logActivity({ type:'admin_upload', targetType, targetId, url: res.url, ts: Date.now() });
-            alert('Image uploaded and saved.');
-          } else {
-            alert('Upload failed: ' + (res && res.error ? res.error : 'unknown'));
-          }
-        });
-    };
-    fr.readAsDataURL(file);
-  };
-  input.click();
+/* update visual state of thumbs when editMode and adminLoggedIn */
+function updateThumbEditableState(){
+  document.querySelectorAll('.thumb').forEach(t => {
+    if(adminLoggedIn && editMode){
+      t.classList.add('admin-editable');
+      t.setAttribute('data-hint','Tap to upload (admin)');
+    } else {
+      t.classList.remove('admin-editable');
+      t.removeAttribute('data-hint');
+    }
+  });
 }
 
-/* ========== admin activity log (local) ========== */
+/* Delegated click handler: if adminLoggedIn & editMode and a .thumb is clicked -> open global file input */
+document.addEventListener('click', function(e){
+  if(!adminLoggedIn || !editMode) return;
+  const thumb = e.target.closest('.thumb');
+  if(!thumb) return;
+  // determine target type and id
+  let targetType = null;
+  let targetId = null;
+  if(thumb.dataset && thumb.dataset.productId) { targetType = 'product'; targetId = thumb.dataset.productId; }
+  else if(thumb.id && thumb.id.startsWith('thumb-')) { targetType = 'product'; targetId = thumb.id.replace('thumb-',''); }
+  else if(thumb.dataset && thumb.dataset.creatorId) { targetType = 'creator'; targetId = thumb.dataset.creatorId; }
+  else {
+    // try id patterns
+    const m = (thumb.id || '').match(/creator-thumb-(.+)/);
+    if(m){ targetType='creator'; targetId=m[1]; }
+    const m2 = (thumb.id || '').match(/thumb-(.+)/);
+    if(m2){ targetType='product'; targetId=m2[1]; }
+  }
+  if(!targetType || !targetId) {
+    console.warn('Could not determine upload target for thumb', thumb);
+    return;
+  }
+  // store lastUploadTarget so globalUploader change handler knows where to save
+  lastUploadTarget = { type: targetType, id: targetId, element: thumb };
+  // trigger the hidden input (works on mobile)
+  globalUploader.value = ''; // reset
+  globalUploader.click();
+});
+
+/* handle file selected in the global uploader */
+globalUploader.addEventListener('change', function(){
+  const file = this.files && this.files[0];
+  if(!file){ return; }
+  if(!lastUploadTarget){ alert('No target found for upload'); return; }
+  const fr = new FileReader();
+  fr.onload = function(ev){
+    const base64 = ev.target.result; // data:image/..;base64,...
+    // call Apps Script to save image
+    postToAppsScript({ action:'upload_image', payload:{ filename: `${lastUploadTarget.type}_${lastUploadTarget.id}_${Date.now()}.png`, data: base64 } })
+      .then(res=>{
+        if(res && res.ok && res.url){
+          // update UI
+          lastUploadTarget.element.style.backgroundImage = `url(${res.url})`;
+          lastUploadTarget.element.textContent = '';
+          // update local storage copy
+          if(lastUploadTarget.type === 'product'){
+            const products = loadJSON('lvn_products') || [];
+            const idx = products.findIndex(p => p.id === lastUploadTarget.id);
+            if(idx >= 0){ products[idx].thumb = res.url; saveJSON('lvn_products', products); }
+          } else {
+            const creators = loadJSON('lvn_creators') || [];
+            const idx = creators.findIndex(c => c.id === lastUploadTarget.id);
+            if(idx >= 0){ creators[idx].thumb = res.url; saveJSON('lvn_creators', creators); }
+          }
+          // persist snapshot to server
+          postToAppsScript({ action:'save_snapshot', payload:{ products: loadJSON('lvn_products') || [], creators: loadJSON('lvn_creators') || [] } }).then(()=>{});
+          logActivity({ type:'admin_upload', targetType: lastUploadTarget.type, targetId: lastUploadTarget.id, url: res.url, ts: Date.now() });
+          alert('Image uploaded and saved to Drive.');
+        } else {
+          alert('Upload failed: ' + (res && res.error ? res.error : 'unknown'));
+        }
+      }).catch(err => { alert('Upload error: ' + err); });
+  };
+  fr.readAsDataURL(file);
+});
+
+/* ====== admin activity log ====== */
 function logActivity(entry){
   const logs = loadJSON('lvn_logs') || [];
   logs.unshift(entry);
@@ -507,36 +556,48 @@ function refreshAdminLog(){
   const logs = loadJSON('lvn_logs') || [];
   const el = document.getElementById('adminLog'); if(!el) return;
   el.innerHTML = '';
-  if(logs.length===0){ el.innerHTML = '<div class="small muted">No activity yet</div>'; return; }
+  if(logs.length === 0){ el.innerHTML = '<div class="small muted">No activity yet</div>'; return; }
   logs.slice(0,100).forEach(l => {
-    const row = document.createElement('div'); const t = new Date(l.ts || Date.now()).toLocaleString();
+    const row = document.createElement('div');
+    const t = new Date(l.ts || Date.now()).toLocaleString();
     let text = `[${t}] `;
-    if(l.type==='registration') text += `Registration (client)`;
-    else if(l.type==='purchase') text += `Purchase: ${l.productId || l.product}`;
-    else if(l.type==='creator_signup') text += `Creator signup: ${l.creator ? l.creator.name : ''}`;
-    else if(l.type==='admin_save') text += `Admin saved products/creators`;
-    else if(l.type==='admin_upload') text += `Uploaded ${l.targetType} ${l.targetId}`;
+    if(l.type === 'registration') text += `Registration (client)`;
+    else if(l.type === 'purchase') text += `Purchase: ${l.productId || l.product}`;
+    else if(l.type === 'creator_signup') text += `Creator signup: ${l.creator ? l.creator.name : ''}`;
+    else if(l.type === 'admin_save') text += `Admin saved products/creators`;
+    else if(l.type === 'admin_upload') text += `Uploaded ${l.targetType} ${l.targetId}`;
     else text += JSON.stringify(l).slice(0,120);
-    row.textContent = text; row.style.padding='6px 4px'; row.style.borderBottom='1px dashed rgba(255,255,255,0.02)'; el.appendChild(row);
+    row.textContent = text;
+    row.style.padding = '6px 4px';
+    row.style.borderBottom = '1px dashed rgba(255,255,255,0.02)';
+    el.appendChild(row);
   });
 }
 
-/* ======= init ======= */
+/* ====== init & helpers ====== */
 function applyUnlockedState(){
   const products = loadJSON('lvn_products') || [];
-  products.forEach(p=>{
+  products.forEach(p => {
     if(isProductUnlocked(p.id) || isMemberVerified()){
-      const overlay = document.getElementById('overlay-' + p.id); if(overlay) overlay.style.display = 'none';
-      const buyArea = document.getElementById('buy-' + p.id); if(buyArea) buyArea.innerHTML = '<span style="color:var(--gold);font-weight:700">Access granted — check your account</span>';
+      const ov = document.getElementById('overlay-' + p.id); if(ov) ov.style.display = 'none';
+      const buy = document.getElementById('buy-' + p.id); if(buy) buy.innerHTML = '<span style="color:var(--gold);font-weight:700">Access granted — check your account</span>';
     }
   });
-  if(isMemberVerified()) document.querySelectorAll('.locked-overlay').forEach(o=>o.style.display='none');
+  if(isMemberVerified()) document.querySelectorAll('.locked-overlay').forEach(o => o.style.display = 'none');
 }
 
-function init(){ renderProducts(); renderCreators(); applyUnlockedState(); renderPayPalButtonsWhenReady(); refreshAdminLog(); }
+function init(){
+  renderProducts();
+  renderCreators();
+  applyUnlockedState();
+  renderPayPalButtonsWhenReady();
+  refreshAdminLog();
+  updateThumbEditableState();
+}
 document.addEventListener('DOMContentLoaded', init);
 
-document.getElementById('openMemberRegister').addEventListener('click', ()=> { document.getElementById('paypal-registration').scrollIntoView({behavior:'smooth'}); });
+/* convenience: open PayPal registration area */
+document.getElementById('openMemberRegister').addEventListener('click', ()=> { document.getElementById('paypal-registration').scrollIntoView({ behavior: 'smooth' }); });
 
 </script>
 </body>
